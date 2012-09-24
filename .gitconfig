@@ -1,0 +1,13 @@
+[user]
+	name = Kevin Warrick
+	email = kevinjwarrick@gmail.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[color]
+	ui = auto
+[alias]
+	s = status -sb
+	unstage = reset HEAD --
+	last = log -1 HEAD
