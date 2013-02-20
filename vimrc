@@ -1,16 +1,21 @@
+
 set nocompatible
-let mapleader = ","
+filetype off
 set visualbell
 
 "" Plugins
-call pathogen#infect()          " pathogen
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'scrooloose/syntastic'
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos="right"
-nmap <silent> <leader>t :NERDTreeToggle<CR>
-
-map <leader>c <c-_><c-_>        " tComment
 
 "" Display
 syntax enable
@@ -42,8 +47,13 @@ set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 
-"" Shortcuts
+"" Key Bindings
+let mapleader = ","
+
 imap jj <esc>
+
+nmap <silent><leader>t :NERDTreeToggle<CR>
+map <leader>c <c-_><c-_>        " tComment
 
 nmap <leader>l :set list!<cr>   " show newslines and tabs
 set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
@@ -53,6 +63,7 @@ nnoremap <leader>s <C-w>s       " horizontal split
 
 nnoremap <leader>f <C-^>        " goto previous file
 nnoremap <leader>q :q<cr>       " quit
+nnoremap <leader>w :w<cr>       " write
 nnoremap <leader>wq :wq<cr>     " write,quit
 
-nnoremap <leader>n :noh<CR>     " no highlight
+nnoremap <leader>n :noh<cr>     " no highlight
