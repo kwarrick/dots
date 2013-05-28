@@ -12,6 +12,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/syntastic'
+Bundle 'flazz/vim-colorschemes'
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
@@ -22,12 +23,12 @@ syntax enable
 
 if has('gui_running')
   set background=dark
+  set guifont=Source_Code_Pro:h18
+  colorscheme blackboard
   " colorscheme solarized
   " colorscheme vividchalk
   " colorscheme railscasts
   " colorscheme github
-  colorscheme blackboard
-  set guifont=Monaco:h16
 endif
 
 set number
