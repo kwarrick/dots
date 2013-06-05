@@ -22,15 +22,18 @@ let NERDTreeWinPos="right"
 syntax enable
 
 if has('gui_running')
-  set background=dark
   if has("gui_gtk2")
-    set guifont=Source_Code_Pro\ 12
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=l  "remove left-hand scroll bar
+    set guioptions-=b  "remove bottom scroll bar
+    set guifont=Source\ Code\ Pro\ 12
   elseif has("gui_macvim")
     set guifont=Source_Code_Pro:h16
   end  
+
+  set background=dark
   colorscheme blackboard
-  set guioptions-=T  "remove toolbar
-  set guioptions-=r  "remove right-hand scroll bar
 endif
 
 set number
