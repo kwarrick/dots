@@ -23,7 +23,11 @@ syntax enable
 
 if has('gui_running')
   set background=dark
-  set guifont=Source_Code_Pro:h16
+  if has("gui_gtk2")
+    set guifont=Source_Code_Pro\ 12
+  elseif has("gui_macvim")
+    set guifont=Source_Code_Pro:h16
+  end  
   colorscheme blackboard
   set guioptions-=T  "remove toolbar
   set guioptions-=r  "remove right-hand scroll bar
