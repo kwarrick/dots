@@ -15,6 +15,8 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'mileszs/ack.vim'
 Bundle 'majutsushi/tagbar'
 
+Bundle 'derekwyatt/vim-scala'
+
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
