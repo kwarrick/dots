@@ -14,6 +14,8 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'flazz/vim-colorschemes'
 
+Bundle 'derekwyatt/vim-scala'
+
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos="right"
