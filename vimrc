@@ -13,12 +13,14 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'flazz/vim-colorschemes'
+Bundle 'mileszs/ack.vim'
+Bundle 'majutsushi/tagbar'
 
 Bundle 'derekwyatt/vim-scala'
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
-let NERDTreeWinPos="right"
+let NERDTreeWinPos='right'
 
 "" Display
 syntax enable
@@ -38,9 +40,9 @@ if has('gui_running')
   colorscheme blackboard
 endif
 
-set number
-set encoding=utf-8
+set number                      " line numbers
 set showcmd                     " display incomplete commands
+set encoding=utf-8
 filetype plugin indent on       " load file type plugins + indentation
 
 "" Whitespace
@@ -61,7 +63,9 @@ let mapleader = ","
 imap jj <esc>
 
 nmap <silent><leader>t :NERDTreeToggle<CR>
-map <leader>c <c-_><c-_>        " tComment
+nmap <leader>c <c-_><c-_>        " tComment
+
+nmap <leader>r :TagbarToggle<CR>" tagbar
 
 nmap <leader>l :set list!<cr>   " show newslines and tabs
 set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
@@ -75,3 +79,7 @@ nnoremap <leader>w :w<cr>       " write
 nnoremap <leader>wq :wq<cr>     " write,quit
 
 nnoremap <leader>n :noh<cr>     " no highlight
+
+map <C-l> <C-w>>
+map <C-h> <C-w><
+
