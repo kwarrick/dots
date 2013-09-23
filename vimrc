@@ -56,6 +56,7 @@ set smartcase                   " ... unless they contain at least one capital l
 
 "" Key Bindings
 let mapleader = ","
+
 imap jj <esc>
 
 nmap <silent><leader>t :NERDTreeToggle<CR>
@@ -86,13 +87,16 @@ map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
+vmap <Tab> >                    " tab indent in visual
+vmap <S-Tab> <
+
 "" Functions
 function! InsertTabWrapper()    " multipurpose tab 
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
         return "\<tab>"
     else
-        return "\<c-p>"
+        return "\<c-n>"
     endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
