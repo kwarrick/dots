@@ -1,4 +1,3 @@
-
 set nocompatible
 filetype off
 set visualbell
@@ -24,14 +23,14 @@ let NERDTreeWinPos='right'
 syntax enable
 
 if has('gui_running')
-  if has("gui_gtk2")
+  if has("gui_macvim")
+    set guifont=Source_Code_Pro:h18
+  elseif has("gui_gtk2")
     set guioptions-=T  "remove toolbar
     set guioptions-=r  "remove right-hand scroll bar
     set guioptions-=l  "remove left-hand scroll bar
     set guioptions-=b  "remove bottom scroll bar
-    set guifont=Source\ Code\ Pro\ 12
-  elseif has("gui_macvim")
-    set guifont=Source_Code_Pro:h16
+    set guifont=Source\ Code\ Pro\ 14
   end  
 
   set background=dark
@@ -39,8 +38,8 @@ if has('gui_running')
 endif
 
 set number                      " line numbers
-set showcmd                     " display incomplete commands
 set encoding=utf-8
+set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
 
 "" Whitespace
@@ -57,11 +56,10 @@ set smartcase                   " ... unless they contain at least one capital l
 
 "" Key Bindings
 let mapleader = ","
-
 imap jj <esc>
 
 nmap <silent><leader>t :NERDTreeToggle<CR>
-nmap <leader>c <c-_><c-_>        " tComment
+map <leader>c <c-_><c-_>        " tComment
 
 nmap <leader>r :TagbarToggle<CR>" tagbar
 
@@ -71,13 +69,15 @@ set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
 nnoremap <leader>v <C-w>v       " vertical split
 nnoremap <leader>s <C-w>s       " horizontal split
 
-nnoremap <leader>f <C-^>        " goto previous file
+map <leader>y "*y               " yank to copy buffer
 nnoremap <leader>q :q<cr>       " quit
 nnoremap <leader>w :w<cr>       " write
 nnoremap <leader>wq :wq<cr>     " write,quit
 
 nnoremap <leader>n :noh<cr>     " no highlight
 
-map <C-l> <C-w>>
-map <C-h> <C-w><
+map <C-l> <C-w>>                " increase vsplit size
+map <C-h> <C-w><                " decrease vsplit size
+
+imap <S-Tab> <Esc><<            " shift-tab 
 
