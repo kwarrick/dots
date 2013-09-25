@@ -1,6 +1,6 @@
 set nocompatible
-filetype off
 set visualbell
+set encoding=utf-8
 
 "" Plugins
 set rtp+=~/.vim/bundle/vundle/
@@ -8,30 +8,42 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'flazz/vim-colorschemes'
-Bundle 'mileszs/ack.vim'
-Bundle 'majutsushi/tagbar'
 
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'derekwyatt/vim-scala'
+
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
 
+let g:ctrlp_cmd = 'CtrlPMRU'    " default to mru file mode
+
+imap <C-k> <Plug>snipMateNextOrTrigger
+
 "" Display
-syntax enable
+syntax enable                   " syntax highlighting
+filetype on
+filetype indent on              " load file type specific indentation
+filetype plugin on              " load file type specific plugins 
 
 if has('gui_running')
   if has("gui_macvim")
     set guifont=Source_Code_Pro:h18
   elseif has("gui_gtk2")
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=l  "remove left-hand scroll bar
-    set guioptions-=b  "remove bottom scroll bar
+    set guioptions-=T           "remove toolbar
+    set guioptions-=r           "remove right-hand scroll bar
+    set guioptions-=l           "remove left-hand scroll bar
+    set guioptions-=b           "remove bottom scroll bar
     set guifont=Source\ Code\ Pro\ 14
   end  
 
@@ -40,9 +52,8 @@ if has('gui_running')
 endif
 
 set number                      " line numbers
-set encoding=utf-8
 set showcmd                     " display incomplete commands
-filetype plugin indent on       " load file type plugins + indentation
+set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -53,54 +64,71 @@ set backspace=indent,eol,start  " backspace through everything in insert mode
 "" Searching
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
-set ignorecase                  " searches are case insensitive...
+set ignorecase                  " searches are case insensitive ...
 set smartcase                   " ... unless they contain at least one capital letter
 
 "" Key Bindings
 let mapleader = ","
 
-imap jj <esc>
+" NERDTree
+nnoremap <silent><leader>t :NERDTreeToggle<CR>
 
-nmap <silent><leader>t :NERDTreeToggle<CR>
-map <leader>c <c-_><c-_>        " tComment
+" tComment
+map <leader>c <c-_><c-_>
 
-nmap <leader>r :TagbarToggle<CR>" tagbar
+" Tagbar
+nnoremap <leader>r :TagbarToggle<CR>
 
-nmap <leader>l :set list!<cr>   " show newslines and tabs
-set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
+" no highlight
+nnoremap <leader>n :noh<cr>
 
-nnoremap <leader>v <C-w>v       " vertical split
-nnoremap <leader>s <C-w>s       " horizontal split
+" show newslines and tabs
+nnoremap <leader>l :set list!<cr>
 
-map <leader>y "*y               " yank to copy buffer
-nnoremap <leader>q :q<cr>       " quit
-nnoremap <leader>w :w<cr>       " write
-nnoremap <leader>wq :wq<cr>     " write,quit
+" vertical/horizontal split
+nnoremap <leader>v <C-w>v
+nnoremap <leader>s <C-w>s
 
-nnoremap <leader>n :noh<cr>     " no highlight
+" increase/decrease vsplit size
+map <C-l> <C-w>>
+map <C-h> <C-w><
 
-map <C-l> <C-w>>                " increase vsplit size
-map <C-h> <C-w><                " decrease vsplit size
+" yank, quit, write, write/quit
+nnoremap <leader>y "*y
+nnoremap <leader>q :q<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <leader>wq :wq<cr>
 
-imap <S-Tab> <Esc><<            " shift-tab 
-
-map <Left> <Nop>                " disable arrow keys
+" disable arrows
+map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
-vmap <Tab> >                    " tab indent in visual
-vmap <S-Tab> <
+" enable shift-tab 
+inoremap <S-Tab> <Esc><<i
+
+" new lines normal mode
+nnoremap <S-Enter> O<ESC>
+nnoremap <Enter> o<ESC>
+
+" toggle paste mode
+set pastetoggle=<leader>p
+
+" touch of emacs
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 
 "" Functions
-function! InsertTabWrapper()    " multipurpose tab 
+function! InsertTabWrapper() " tab OR autocomplete
     let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
+    if !col || getline('.')[col - 1] !~ '\k' 
+        " return "\<tab>"
+        return "  "
     else
         return "\<c-n>"
     endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+
 
