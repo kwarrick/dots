@@ -119,6 +119,12 @@ set pastetoggle=<leader>p
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 
+"" Abbreviations
+" common command mistakes
+cabbrev W w 
+cabbrev Q q
+cabbrev E e
+
 "" Functions
 function! InsertTabWrapper() " tab OR autocomplete
     let col = col('.') - 1
