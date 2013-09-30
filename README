@@ -1,0 +1,7 @@
+Here lies a window into my soul - my config files. 
+
+$ git clone git@github.com:kwarrick/dotfiles
+$ ln -ivs dotfiles/vimrc ~/.vimrc
+$ ln -ivs dotfiles/vim ~/.vim
+
+...
