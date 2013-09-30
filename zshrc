@@ -50,7 +50,6 @@ alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/ser
 alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias mysql_start="mysql.server start"
 alias mysql_stop="mysql.server stop"
-co () { for p in $*; do svn co http://svn.plexusweb.net/svn/$p/$p/trunk $p; done; }
 
 ###############
 #  FUNCTIONS  #

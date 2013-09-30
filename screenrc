@@ -1,5 +1,4 @@
 hardstatus alwayslastline 
-#hardstatus string "%{+b Rk}(%{-b g}$LOGNAME@%H%{+b R}) (%{-b g}%C %a%{+b R}) %{-b g} %n %t %h"
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W}%c %{g}]'
 
 startup_message off
@@ -8,5 +7,3 @@ vbell off
 bell_msg "DING"
 
 shell -/bin/bash
-
-password QH2UrH2gHKm5E
