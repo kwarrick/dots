@@ -38,7 +38,7 @@ filetype plugin on              " load file type specific plugins
 
 if has('gui_running')
   if has("gui_macvim")
-    set guifont=Source_Code_Pro:h18
+    set guifont=Source\ Code\ Pro:h18
   elseif has("gui_gtk2")
     set guioptions-=T           "remove toolbar
     set guioptions-=r           "remove right-hand scroll bar
@@ -98,6 +98,9 @@ nnoremap <leader>y "*y
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wq :wq<cr>
+
+" color column 80
+nnoremap <leader>8 :set colorcolumn=80<cr>
 
 " disable arrows
 map <Left> <Nop>
