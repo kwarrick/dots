@@ -103,3 +103,32 @@ setopt nullglob
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
+
+#########################
+#   VI/EMACS BINDINGS   #
+#########################
+
+bindkey -v
+
+bindkey '^k' vi-cmd-mode 
+
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line
+bindkey -M viins '^r' history-incremental-pattern-search-backward
+bindkey -M viins '^u' backward-kill-line
+bindkey -M viins '^y' yank
+
+bindkey -M vicmd '^a' beginning-of-line
+bindkey -M vicmd '^e' end-of-line
+bindkey -M vicmd 'yy' vi-yank-whole-line
+
+_cut_inner_word() {
+  setopt localoptions extendedglob
+  LBUFFER=${LBUFFER%%[^ ]#}
+  RBUFFER=${RBUFFER##[^ ]#}
+}
+zle -N cut-inner-word _cut_inner_word
+bindkey '^xc' cut-inner-word
+bindkey -M vicmd 'ciw' cut-inner-word
+
+# EOF 

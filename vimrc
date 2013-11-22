@@ -18,13 +18,16 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'derekwyatt/vim-scala'
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+
+" Bundle 'Valloric/YouCompleteMe'
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
+let NERDTreeIgnore = ['\.pyc$']
 
 let g:ctrlp_cmd = 'CtrlPMRU'    " default to mru file mode
 
@@ -35,6 +38,10 @@ syntax enable                   " syntax highlighting
 filetype on
 filetype indent on              " load file type specific indentation
 filetype plugin on              " load file type specific plugins 
+
+if has('mouse')
+  set mouse=a
+end
 
 if has('gui_running')
   if has("gui_macvim")
@@ -99,14 +106,15 @@ nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wq :wq<cr>
 
-" color column 80
-nnoremap <leader>8 :set colorcolumn=80<cr>
-
 " disable arrows
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
+
+" no escape
+inoremap <Esc> <Nop>
+inoremap <C-k> <Esc>
 
 " enable shift-tab 
 inoremap <S-Tab> <Esc><<i
@@ -140,4 +148,12 @@ function! InsertTabWrapper() " tab OR autocomplete
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
-
+function! g:ToggleColorColumn()
+  if &colorcolumn != ''
+    setlocal colorcolumn&
+  else
+    setlocal colorcolumn=+1
+  endif
+endfunction
+nnoremap <silent> <leader>h :call g:ToggleColorColumn()<cr>
+ 
