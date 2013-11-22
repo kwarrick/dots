@@ -29,7 +29,6 @@ function current_branch() {
   echo ${ref#refs/heads/}
 }
 
-#Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
   local cb=$(current_branch)
   if [ -n "$cb" ]; then
@@ -45,11 +44,15 @@ chpwd() { source ~/.zsh/prompt }
 #   ALIASES   #
 ###############
 
-alias ls="ls --color=auto -G"
-alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
-alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
-alias mysql_start="mysql.server start"
-alias mysql_stop="mysql.server stop"
+if [ `uname` = "Darwin" ]; then
+  alias ls="ls -G"
+  alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
+  alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+  alias mysql_start="mysql.server start"
+  alias mysql_stop="mysql.server stop"
+else
+  alias ls="ls --color=auto -G"
+fi
 
 ###############
 #  FUNCTIONS  #
@@ -99,6 +102,8 @@ setopt complete_in_word
 setopt extended_glob
 
 setopt nullglob
+
+setopt interactivecomments
 
 autoload -U edit-command-line
 zle -N edit-command-line
