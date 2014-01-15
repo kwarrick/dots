@@ -1,6 +1,7 @@
 set nocompatible
 set visualbell
 set encoding=utf-8
+set history=100
 
 "" Plugins
 set rtp+=~/.vim/bundle/vundle/
