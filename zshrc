@@ -54,6 +54,8 @@ else
   alias ls="ls --color=auto -G"
 fi
 
+alias l=ls
+alias ll="ls -lah"
 alias gdb="gdb -q"
 
 ###############

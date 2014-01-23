@@ -32,7 +32,7 @@ let NERDTreeIgnore = ['\.pyc$']
 
 let g:ctrlp_cmd = 'CtrlPMRU'    " default to mru file mode
 
-imap <C-k> <Plug>snipMateNextOrTrigger
+imap <C-j> <Plug>snipMateNextOrTrigger
 
 "" Display
 syntax enable                   " syntax highlighting
@@ -114,7 +114,6 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 " no escape
-inoremap <Esc> <Nop>
 inoremap <C-k> <Esc>
 
 " enable shift-tab 
