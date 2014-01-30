@@ -113,9 +113,6 @@ map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
-" no escape
-inoremap <C-k> <Esc>
-
 " enable shift-tab 
 inoremap <S-Tab> <Esc><<i
 
