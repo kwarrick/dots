@@ -146,4 +146,6 @@ zle -N cut-inner-word _cut_inner_word
 bindkey '^xc' cut-inner-word
 bindkey -M vicmd 'ciw' cut-inner-word
 
+xmodemap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
 # EOF 
