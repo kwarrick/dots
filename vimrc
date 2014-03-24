@@ -23,7 +23,9 @@ Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'garbas/vim-snipmate'
 
-" Bundle 'Valloric/YouCompleteMe'
+" if has("gui_macvim")
+"   Bundle 'Valloric/YouCompleteMe'
+" endif
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
@@ -154,3 +156,10 @@ function! g:ToggleColorColumn()
 endfunction
 nnoremap <silent> <leader>h :call g:ToggleColorColumn()<cr>
  
+"" File Customizations
+if has("autocmd")
+  filetype on
+  autocmd FileType html setlocal wrap linebreak spell spelllang=en_us  
+  autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us  
+  autocmd BufNewFile psql.edit.* setlocal ft=sql
+endif
