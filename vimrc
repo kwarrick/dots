@@ -18,6 +18,7 @@ Bundle 'flazz/vim-colorschemes'
 
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'derekwyatt/vim-scala'
+Bundle 'jnwhiteh/vim-golang'
 
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
