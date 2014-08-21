@@ -3,6 +3,7 @@
 	email = kevinjwarrick@gmail.com
 [core]
 	editor = vim
+  pager = less -r
 [merge]
 	tool = vimdiff
 [color]
