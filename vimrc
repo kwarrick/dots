@@ -18,29 +18,36 @@ Bundle 'flazz/vim-colorschemes'
 
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'derekwyatt/vim-scala'
+Bundle 'jnwhiteh/vim-golang'
 
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
 
-" if has("gui_macvim")
-"   Bundle 'Valloric/YouCompleteMe'
-" endif
+Bundle 'SirVer/ultisnips'
+
+Bundle 'ervandew/supertab'
+" Bundle 'Valloric/YouCompleteMe'
+
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:syntastic_ocaml_checkers = ['merlin']
 
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
 let NERDTreeIgnore = ['\.pyc$']
 
-let g:ctrlp_cmd = 'CtrlPMRU'    " default to mru file mode
-
-imap <C-j> <Plug>snipMateNextOrTrigger
+let g:UltiSnipsExpandTrigger="<C-h>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
 
 "" Display
 syntax enable                   " syntax highlighting
 filetype on
 filetype indent on              " load file type specific indentation
 filetype plugin on              " load file type specific plugins 
+
+set noswapfile
 
 if has('mouse')
   set mouse=a
@@ -135,31 +142,12 @@ cabbrev W w
 cabbrev Q q
 cabbrev E e
 
-"" Functions
-function! InsertTabWrapper() " tab OR autocomplete
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k' 
-        " return "\<tab>"
-        return "  "
-    else
-        return "\<c-n>"
-    endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-
-function! g:ToggleColorColumn()
-  if &colorcolumn != ''
-    setlocal colorcolumn&
-  else
-    setlocal colorcolumn=+1
-  endif
-endfunction
-nnoremap <silent> <leader>h :call g:ToggleColorColumn()<cr>
- 
-"" File Customizations
+" File Customizations
 if has("autocmd")
   filetype on
   autocmd FileType html setlocal wrap linebreak spell spelllang=en_us  
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us  
-  autocmd BufNewFile psql.edit.* setlocal ft=sql
+  autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us  
+  autocmd FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
 endif
+
