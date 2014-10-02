@@ -22,6 +22,7 @@ Bundle 'jnwhiteh/vim-golang'
 
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle 'jgdavey/tslime.vim'
 
 Bundle 'SirVer/ultisnips'
 
@@ -96,6 +97,11 @@ map <leader>c <c-_><c-_>
 " Tagbar
 nnoremap <leader>r :TagbarToggle<CR>
 
+" tslime
+vmap <leader>e <Plug>SendSelectionToTmux
+nmap <leader>e <Plug>NormalModeSendToTmux
+nmap <leader>er <Plug>SetTmuxVars
+
 " no highlight
 nnoremap <leader>n :noh<cr>
 
@@ -149,5 +155,6 @@ if has("autocmd")
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us  
   autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us  
   autocmd FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+  autocmd BufRead /tmp/psql.edit.* setlocal ft=sql
 endif
 
