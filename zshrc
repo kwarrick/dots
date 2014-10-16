@@ -57,6 +57,7 @@ fi
 alias l=ls
 alias ll="ls -lah"
 alias gdb="gdb -q"
+alias update="sudo apt-get update && sudo apt-get upgrade"
 
 ###############
 #  FUNCTIONS  #
@@ -87,8 +88,9 @@ tvnc() {
 
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
 PATH=/usr/local/share/python:$PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 ###############
 #   OPTIONS   #
@@ -150,4 +152,5 @@ if [ ! `uname` = "Darwin" ]; then
   xmodemap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 fi
 
-# EOF 
+# OPAM configuration
+. /home/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
