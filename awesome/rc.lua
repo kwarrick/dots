@@ -3,6 +3,7 @@ require("awful.autofocus")
 require("awful.rules")
 require("beautiful") 
 require("naughty") 
+require("vicious")
 
 require("debian.menu")
 
@@ -38,11 +39,11 @@ end
 -- Variables --
 -- -- -- -- -- 
 
-configd = "/home/warrick/.config/awesome"
+configd = awful.util.getdir("config")
 terminal = "terminator"
 
 -- Theme
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init(configd .. "/themes/default/theme.lua")
 
 -- Editor
 editor = os.getenv("EDITOR") or "vim"
@@ -78,8 +79,8 @@ for s = 1, screen.count() do
   tags[s] = awful.tag({ 1, 2, 3, 4, 5 }, s, layouts[1])
 end
 
--- -- -- -- 
--- Menu  --
+-- -- -- --
+-- Panel --
 -- -- -- --
 
 awesomemenu = {
@@ -88,6 +89,7 @@ awesomemenu = {
   { "Quit", awesome.quit }
 }
 
+-- Menu
 mainmenu = awful.menu({ 
   items = { 
     { "Terminal", terminal },
@@ -96,14 +98,25 @@ mainmenu = awful.menu({
   }
 })
 
+-- Launcher
 launcher = awful.widget.launcher({ 
   image = image(beautiful.awesome_icon), 
   menu = mainmenu 
 })
 
-textclock = awful.widget.textclock({ align = "right" })
+-- Clock
+clkwidget = awful.widget.textclock({ align = "right" })
 
+-- Systray
 systray = widget({ type = "systray" })
+
+-- Memory
+memwidget = widget({ type = "textbox" })
+vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)     ", 13)
+
+-- CPU
+cpuwidget = widget({ type = "textbox" })
+vicious.register(cpuwidget, vicious.widgets.cpu, "CPU $1%     ")
 
 -- Create wibox for each screen
 wibox = {}
@@ -180,8 +193,10 @@ for s = 1, screen.count() do
       layout = awful.widget.layout.horizontal.leftright
     },
     layoutbox[s],
-    textclock,
+    clkwidget,
     s == 1 and systray or nil,
+    cpuwidget,
+    memwidget,
     tasklist[s],
     layout = awful.widget.layout.horizontal.rightleft
   }
@@ -388,4 +403,4 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- Spawn -- 
 -- -- -- --
 
-awful.util.spawn_with_shell("run_once nm-applet")
+os.execute("nm-applet &")
