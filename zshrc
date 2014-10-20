@@ -50,6 +50,8 @@ if [ `uname` = "Darwin" ]; then
   alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
   alias mysql_start="mysql.server start"
   alias mysql_stop="mysql.server stop"
+  alias ida="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.3/idaq.exe"
+  alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.3/idaq64.exe"
 else
   alias ls="ls --color=auto -G"
 fi
@@ -81,6 +83,11 @@ tvnc() {
   ssh -t -L 5900:localhost:5900 $1 'x11vnc -localhost -display :0'
 }
 
+hist() { 
+  grep "$*" ~/.zsh_history \
+    | cut -d';' -f2-; 
+}
+
 ###############
 #    PATH     #
 ###############
@@ -88,7 +95,16 @@ tvnc() {
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
-PATH=/usr/local/share/python:$PATH
+
+
+if [ `uname` = "Darwin" ]; then
+  source /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
+
+###############
+#    VARS     #
+###############
+export EDITOR=mvim
 
 ###############
 #   OPTIONS   #

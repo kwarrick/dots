@@ -27,17 +27,32 @@ Bundle 'jgdavey/tslime.vim'
 Bundle 'SirVer/ultisnips'
 
 Bundle 'ervandew/supertab'
-" Bundle 'Valloric/YouCompleteMe'
 
+Plugin 'Lokaltog/vim-easymotion'
+
+" Powerline
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Light:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
+set laststatus=2
+
+" OCaml Merlin
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 let g:syntastic_ocaml_checkers = ['merlin']
 
+" NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
 let NERDTreeIgnore = ['\.pyc$']
 
+" Ultisnips
 let g:UltiSnipsExpandTrigger="<C-h>"
 let g:UltiSnipsJumpForwardTrigger="<C-k>"
 let g:UltiSnipsJumpBackwardTrigger="<C-j>"
@@ -56,7 +71,8 @@ end
 
 if has('gui_running')
   if has("gui_macvim")
-    set guifont=Source\ Code\ Pro:h18
+    " set guifont=Source\ Code\ Pro:h18
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h18
   elseif has("gui_gtk2")
     set guioptions-=T           "remove toolbar
     set guioptions-=r           "remove right-hand scroll bar
@@ -141,6 +157,9 @@ set pastetoggle=<leader>p
 " touch of emacs
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+
+" visual select pasted text
+nnoremap gp `[v`]
 
 "" Abbreviations
 " common command mistakes
