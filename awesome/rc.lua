@@ -194,6 +194,7 @@ for s = 1, screen.count() do
     },
     layoutbox[s],
     clkwidget,
+    volume_widget,
     s == 1 and systray or nil,
     cpuwidget,
     memwidget,
@@ -262,6 +263,11 @@ awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts, 
 awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
 awful.key({ modkey, "Control" }, "n", awful.client.restore),
+
+-- Volume
+awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+") end),
+awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-") end),
+awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end),
 
 -- Prompt
 awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
