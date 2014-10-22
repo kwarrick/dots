@@ -1,49 +1,59 @@
-for f in ~/.zsh/libs/*; do
-  source $f
-done
+##
+# PROMPT
+## 
+setopt prompt_subst               # Enable prompt substitutions.
+autoload -U colors && colors      # Enable colors. 
+autoload -U promptinit            # Intialize advanced prompt support.
+PROMPT="%{$fg[green]%}[%n%{$reset_color%}@%{$fg[green]%}%m %{$fg[blue]%}%1~%{$fg[green]%}]%{$reset_color%}%# "
+RPROMPT=""
 
-###############
-#   PROMPT    #
-###############
+## 
+# COMPLETION
+## 
+autoload -U compinit              # Enable zsh tab-completion system.
+compinit
+setopt complete_in_word
+setopt always_to_end
+setopt correctall
+setopt list_ambiguous
 
-setopt completealiases
-setopt PROMPT_SUBST
-autoload -U compinit promptinit
-autoload -U colors && colors
-compinit -i
-promptinit
+# `kill' completion.
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
 
-function ssh_connection() {
-  if [[ -n $SSH_CONNECTION ]]; then
-    echo " %{$fg_bold[yellow]%}⚡ "
-  fi
-}
+compdef _gnu_generic gcc
+compdef _gnu_generic gdb
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}%{$fg[white]%}("
-ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%} ●%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+##
+# VARIABLES
+##
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 
-function current_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo ${ref#refs/heads/}
-}
+##
+# OPTIONS
+##
+setopt extended_history           # Store begging time: elapsed seconds: command.
+setopt hist_expire_dups_first
+setopt hist_ignore_dups           # Ignore duplication command history list.
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history              # Share command history data across terminals.
+setopt no_beep
+setopt extended_glob              # Treat #,~,^ as part of patterns for files.
+setopt interactivecomments        # Allow comments in interactive mode.
+setopt hist_ignore_space          # Ignore entries with leading spaces.
 
-git_custom_status() {
-  local cb=$(current_branch)
-  if [ -n "$cb" ]; then
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(current_branch)$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
-  fi
-}
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
 
-source ~/.zsh/prompt
-
-chpwd() { source ~/.zsh/prompt }
-
-###############
-#   ALIASES   #
-###############
-
+##
+# ALIASES
+##
 if [ `uname` = "Darwin" ]; then
   alias ls="ls -G"
   alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
@@ -52,81 +62,44 @@ if [ `uname` = "Darwin" ]; then
   alias mysql_stop="mysql.server stop"
 else
   alias ls="ls --color=auto -G"
+  alias netstat="sudo netstat -pant"
+  alias update="sudo apt-get update && sudo apt-get upgrade"
 fi
 
-alias l=ls
+alias v="vim"
+alias g="git"
+alias scp='noglob scp'
 alias ll="ls -lah"
 alias gdb="gdb -q"
-alias update="sudo apt-get update && sudo apt-get upgrade"
 
-###############
-#  FUNCTIONS  #
-###############
-
-ehd() {
+##
+# FUNCTIONS
+## 
+function ehd() {
 	hexdump -v -e '"\\\x" 1/1 "%02x"' $1
 		# 1/1: iteration count/byte count
 }
 
 if [ `uname` = "Darwin" ]; then
-  trash() {
+  funtion trash() {
     mv -v $* /Users/warrick/.Trash/;
   }	
 fi
 
-title() {
+function title() {
   echo -ne "\033]0;"$*"\007"
 }
 
-tvnc() {
+function tvnc() {
   ssh -t -L 5900:localhost:5900 $1 'x11vnc -localhost -display :0'
 }
 
-###############
-#    PATH     #
-###############
+##
+# KEY BINDINGS
+## 
 
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=/usr/local/share/python:$PATH
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-###############
-#   OPTIONS   #
-###############
-
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
-setopt append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups           # ignore duplication command history list
-setopt hist_ignore_space
-setopt hist_verify
-setopt inc_append_history
-setopt share_history              # share command history data
-
-setopt no_beep
-setopt complete_in_word
-setopt extended_glob
-
-setopt nullglob
-
-setopt interactivecomments
-
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
-
-#########################
-#   VI/EMACS BINDINGS   #
-#########################
-
-bindkey -v
-
+# VI mode with a bit of Emacs.
+bindkey -v                
 bindkey '^k' vi-cmd-mode 
 
 bindkey -M viins '^a' beginning-of-line
@@ -148,9 +121,26 @@ zle -N cut-inner-word _cut_inner_word
 bindkey '^xc' cut-inner-word
 bindkey -M vicmd 'ciw' cut-inner-word
 
-if [ ! `uname` = "Darwin" ]; then
-  xmodemap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-fi
+# VIM mode prompt.
+function zle-line-init zle-keymap-select {
+  VIM_PROMPT="[%{$fg[yellow]%}NORMAL%{$reset_color%}]"
+  RPROMPT="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
-# OPAM configuration
+function zle-line-finish {
+  vim_mode=$vim_ins_mode
+}
+zle -N zle-line-finish
+  
+##
+# LANGUAGES
+##
+
+# OPAM configuration.
 . /home/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# RVM configuration.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
