@@ -96,69 +96,14 @@ function tvnc() {
   ssh -t -L 5900:localhost:5900 $1 'x11vnc -localhost -display :0'
 }
 
-<<<<<<< HEAD
-hist() { 
+function hist() { 
   grep "$*" ~/.zsh_history \
     | cut -d';' -f2-; 
 }
 
-###############
-#    PATH     #
-###############
-
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$(ruby -rubygems -e "puts Gem.user_dir")/bin
-
-
-if [ `uname` = "Darwin" ]; then
-  source /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
-
-###############
-#    VARS     #
-###############
-export EDITOR=mvim
-
-###############
-#   OPTIONS   #
-###############
-
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
-setopt append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups           # ignore duplication command history list
-setopt hist_ignore_space
-setopt hist_verify
-setopt inc_append_history
-setopt share_history              # share command history data
-
-setopt no_beep
-setopt complete_in_word
-setopt extended_glob
-
-setopt nullglob
-
-setopt interactivecomments
-
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
-
-#########################
-#   VI/EMACS BINDINGS   #
-#########################
-
-bindkey -v
-=======
 ##
 # KEY BINDINGS
 ## 
->>>>>>> 95341f986130ae6fb410f746e19bfc1a2c1daa8b
 
 # VI mode with a bit of Emacs.
 bindkey -v                
