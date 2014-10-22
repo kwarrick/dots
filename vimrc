@@ -28,11 +28,24 @@ Bundle 'SirVer/ultisnips'
 
 Bundle 'ervandew/supertab'
 
-Plugin 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-easymotion'
+
+" NERDTree
+nnoremap <silent><leader>t :NERDTreeToggle<CR>
+
+" tComment
+map <leader>c <c-_><c-_>
+
+" Tagbar
+nnoremap <leader>r :TagbarToggle<CR>
+
+" tslime
+vmap <leader>e <Plug>SendSelectionToTmux
+nmap <leader>e <Plug>NormalModeSendToTmux
+nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Light:h15
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
@@ -71,7 +84,6 @@ end
 
 if has('gui_running')
   if has("gui_macvim")
-    " set guifont=Source\ Code\ Pro:h18
     set guifont=Source\ Code\ Pro\ for\ Powerline:h18
   elseif has("gui_gtk2")
     set guioptions-=T           "remove toolbar
@@ -103,20 +115,6 @@ set smartcase                   " ... unless they contain at least one capital l
 
 "" Key Bindings
 let mapleader = ","
-
-" NERDTree
-nnoremap <silent><leader>t :NERDTreeToggle<CR>
-
-" tComment
-map <leader>c <c-_><c-_>
-
-" Tagbar
-nnoremap <leader>r :TagbarToggle<CR>
-
-" tslime
-vmap <leader>e <Plug>SendSelectionToTmux
-nmap <leader>e <Plug>NormalModeSendToTmux
-nmap <leader>er <Plug>SetTmuxVars
 
 " no highlight
 nnoremap <leader>n :noh<cr>
