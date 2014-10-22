@@ -1,2 +1,0 @@
-PROMPT="%{$fg[yellow]%}[%n%{$reset_color%}@%{$fg[yellow]%}%m %{$fg[blue]%}%1~%{$fg[yellow]%}] $(git_custom_status)$(ssh_connection)%{$reset_color%}%# "
-RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}] "
