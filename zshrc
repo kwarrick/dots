@@ -4,7 +4,15 @@
 setopt prompt_subst               # Enable prompt substitutions.
 autoload -U colors && colors      # Enable colors. 
 autoload -U promptinit            # Intialize advanced prompt support.
-PROMPT="%{$fg[green]%}[%n%{$reset_color%}@%{$fg[green]%}%m %{$fg[blue]%}%1~%{$fg[green]%}]%{$reset_color%}%# "
+
+PCOLOR=yellow
+function ssh_connection() {
+  PCOLOR=green
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo " %{$fg_bold[yellow]%}⚡ "
+  fi
+}
+PROMPT="%{$fg[$PCOLOR]%}[%n%{$reset_color%}@%{$fg[$PCOLOR]%}%m %{$fg[blue]%}%1~%{$fg[$PCOLOR]%}]%{$reset_color%} ${ssh_connection} %# "
 RPROMPT=""
 
 ## 
@@ -105,10 +113,10 @@ function hist() {
 # KEY BINDINGS
 ## 
 
-# VI mode with a bit of Emacs.
-bindkey -v                
-bindkey '^k' vi-cmd-mode 
+bindkey -v                # Vi bindings.
+bindkey '^k' vi-cmd-mode  # Ctrl-k to NORMAL mode.
 
+# Little bit of Emacs.
 bindkey -M viins '^a' beginning-of-line
 bindkey -M viins '^e' end-of-line
 bindkey -M viins '^r' history-incremental-pattern-search-backward
