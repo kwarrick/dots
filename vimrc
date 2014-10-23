@@ -3,6 +3,8 @@ set visualbell
 set encoding=utf-8
 set history=100
 
+let mapleader = ","
+
 "" Plugins
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -114,7 +116,6 @@ set ignorecase                  " searches are case insensitive ...
 set smartcase                   " ... unless they contain at least one capital letter
 
 "" Key Bindings
-let mapleader = ","
 
 " no highlight
 nnoremap <leader>n :noh<cr>
