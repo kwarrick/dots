@@ -7,7 +7,6 @@ autoload -U promptinit            # Intialize advanced prompt support.
 
 PCOLOR=yellow
 function ssh_connection() {
-  PCOLOR=green
   if [[ -n $SSH_CONNECTION ]]; then
     echo " %{$fg_bold[yellow]%}⚡ "
   fi
