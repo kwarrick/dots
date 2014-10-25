@@ -70,7 +70,8 @@ fi
 
 alias v="vim"
 alias g="git"
-alias scp='noglob scp'
+alias f="noglob find -name"
+alias scp="noglob scp"
 alias ll="ls -lah"
 alias gdb="gdb -q"
 
