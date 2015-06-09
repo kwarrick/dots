@@ -3,9 +3,9 @@
 #   $ git clone https://github.com/kwarrick/dotfiles config
 #   $ ./config/bootstrap
 cd ~
-ln -s config/vimrc ~/.vimrc
-ln -s config/vim ~/.vim
-ln -s config/tmux.conf ~/.tmux.conf
+ln -s dots/vimrc ~/.vimrc
+ln -s dots/vim ~/.vim
+ln -s dots/tmux.conf ~/.tmux.conf
 mkdir ~/.vim/bundle
 git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
 
