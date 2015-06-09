@@ -10,28 +10,29 @@ let mapleader = ","
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'flazz/vim-colorschemes'
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'airblade/vim-gitgutter'
 
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'jnwhiteh/vim-golang'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'jnwhiteh/vim-golang'
 
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'jgdavey/tslime.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'jgdavey/tslime.vim'
 
-Bundle 'SirVer/ultisnips'
+Plugin 'SirVer/ultisnips'
 
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'michaeljsmith/vim-indent-object'
 
 " NERDTree
 nnoremap <silent><leader>t :NERDTreeToggle<CR>
@@ -48,7 +49,7 @@ nmap <leader>e <Plug>NormalModeSendToTmux
 nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
