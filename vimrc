@@ -1,7 +1,8 @@
 set nocompatible
-set visualbell
 set encoding=utf-8
 set history=100
+set wildmenu
+filetype off
 
 let mapleader = ","
 
