@@ -10,6 +10,9 @@
 	ui = auto
 [alias]
 	s = status -sb
+  co = checkout
+  ci = commit
+  ca = commit -a
 	unstage = reset HEAD --
 	last = log -1 HEAD
 [push]
