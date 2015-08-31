@@ -1,7 +1,8 @@
 set nocompatible
-set visualbell
 set encoding=utf-8
 set history=100
+set wildmenu
+filetype off
 
 let mapleader = ","
 
@@ -9,28 +10,29 @@ let mapleader = ","
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'flazz/vim-colorschemes'
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'airblade/vim-gitgutter'
 
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'jnwhiteh/vim-golang'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'jnwhiteh/vim-golang'
 
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'jgdavey/tslime.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'jgdavey/tslime.vim'
 
-Bundle 'SirVer/ultisnips'
+Plugin 'SirVer/ultisnips'
 
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'michaeljsmith/vim-indent-object'
 
 " NERDTree
 nnoremap <silent><leader>t :NERDTreeToggle<CR>
@@ -47,7 +49,7 @@ nmap <leader>e <Plug>NormalModeSendToTmux
 nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
@@ -68,9 +70,10 @@ let NERDTreeWinPos='right'
 let NERDTreeIgnore = ['\.pyc$']
 
 " Ultisnips
-let g:UltiSnipsExpandTrigger="<C-h>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
-let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+let g:UltiSnipsExpandTrigger="<c-h>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+let g:UltiSnipsEditSplit="horizontal"
 
 "" Display
 syntax enable                   " syntax highlighting
@@ -85,6 +88,8 @@ if has('mouse')
 end
 
 if has('gui_running')
+  set cursorline                  " highlight cursor line
+
   if has("gui_macvim")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h18
   elseif has("gui_gtk2")
@@ -92,7 +97,7 @@ if has('gui_running')
     set guioptions-=r           "remove right-hand scroll bar
     set guioptions-=l           "remove left-hand scroll bar
     set guioptions-=b           "remove bottom scroll bar
-    set guifont=Source\ Code\ Pro\ 14
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 12
   end  
 
   set background=dark
@@ -102,6 +107,7 @@ endif
 set number                      " line numbers
 set showcmd                     " display incomplete commands
 set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
+set colorcolumn=80              " highlight column 80
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -113,7 +119,7 @@ set backspace=indent,eol,start  " backspace through everything in insert mode
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive ...
-set smartcase                   " ... unless they contain at least one capital letter
+set smartcase                   " ... unless they contain at least one capital 
 
 "" Key Bindings
 
@@ -126,6 +132,9 @@ nnoremap <leader>l :set list!<cr>
 " vertical/horizontal split
 nnoremap <leader>v <C-w>v
 nnoremap <leader>s <C-w>s
+
+" no pipe character for split divider
+set fillchars+=vert:\ 
 
 " increase/decrease vsplit size
 map <C-l> <C-w>>
@@ -160,6 +169,19 @@ inoremap <C-e> <End>
 " visual select pasted text
 nnoremap gp `[v`]
 
+" emacs  command line
+cnoremap <C-a>  <Home>
+cnoremap <C-b>  <Left>
+
+" toggles
+nmap \l :setlocal number!<CR>
+nmap \o :set paste!<CR>
+nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
+
 "" Abbreviations
 " common command mistakes
 cabbrev W w 
@@ -174,5 +196,6 @@ if has("autocmd")
   autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us  
   autocmd FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
   autocmd BufRead /tmp/psql.edit.* setlocal ft=sql
+  autocmd BufNewFile,BufRead *.ejs set filetype=html
 endif
 

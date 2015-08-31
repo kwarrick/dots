@@ -56,6 +56,7 @@ modkey = "Mod4"
 layouts =
 {
   awful.layout.suit.tile,
+  awful.layout.suit.magnifier,
   awful.layout.suit.tile.left,
   awful.layout.suit.tile.top,
   awful.layout.suit.tile.bottom,
@@ -66,7 +67,6 @@ layouts =
   -- awful.layout.suit.fair.horizontal,
   -- awful.layout.suit.spiral,
   -- awful.layout.suit.spiral.dwindle,
-  -- awful.layout.suit.magnifier
 }
 
 -- -- -- --
