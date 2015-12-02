@@ -22,7 +22,7 @@ Plugin 'airblade/vim-gitgutter'
 
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'derekwyatt/vim-scala'
-Plugin 'jnwhiteh/vim-golang'
+Plugin 'fatih/vim-go'
 
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -91,7 +91,7 @@ if has('gui_running')
   set cursorline                  " highlight cursor line
 
   if has("gui_macvim")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h18
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h14
   elseif has("gui_gtk2")
     set guioptions-=T           "remove toolbar
     set guioptions-=r           "remove right-hand scroll bar
