@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Capslock Vim Arrows</name>
+    <appendix>Use capslock+HJKL as arrow keys.</appendix>
+    <identifier>private.capslock_vim_arrows</identifier>
+    <autogen>
+      __KeyOverlaidModifier__
+      KeyCode::PC_APPLICATION,
+      KeyCode::VK_MODIFIER_EXTRA1,
+      KeyCode::ESCAPE
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::H, ModifierFlag::EXTRA1,
+      KeyCode::CURSOR_LEFT
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::J, ModifierFlag::EXTRA1,
+      KeyCode::CURSOR_DOWN
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::K, ModifierFlag::EXTRA1,
+      KeyCode::CURSOR_UP
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::L, ModifierFlag::EXTRA1,
+      KeyCode::CURSOR_RIGHT
+    </autogen>
+  </item>
+</root>
