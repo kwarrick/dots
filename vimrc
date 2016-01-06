@@ -49,7 +49,7 @@ nmap <leader>e <Plug>NormalModeSendToTmux
 nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
@@ -129,9 +129,9 @@ nnoremap <leader>n :noh<cr>
 " show newslines and tabs
 nnoremap <leader>l :set list!<cr>
 
-" vertical/horizontal split
-nnoremap <leader>v <C-w>v
-nnoremap <leader>s <C-w>s
+" highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
 
 " no pipe character for split divider
 set fillchars+=vert:\ 
