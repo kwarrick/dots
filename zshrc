@@ -1,9 +1,12 @@
 ##
 # PROMPT
-## 
+##
 setopt prompt_subst               # Enable prompt substitutions.
-autoload -U colors && colors      # Enable colors. 
+autoload -U colors && colors      # Enable colors.
 autoload -U promptinit            # Intialize advanced prompt support.
+
+autoload -U select-word-style
+select-word-style bash
 
 PCOLOR=yellow
 function ssh_connection() {
@@ -14,14 +17,14 @@ function ssh_connection() {
 PROMPT="%{$fg[$PCOLOR]%}[%n%{$reset_color%}@%{$fg[$PCOLOR]%}%m %{$fg[blue]%}%1~%{$fg[$PCOLOR]%}]%{$reset_color%} ${ssh_connection} %# "
 RPROMPT=""
 
-## 
+##
 # COMPLETION
-## 
+##
 autoload -U compinit              # Enable zsh tab-completion system.
 compinit
 setopt complete_in_word
 setopt always_to_end
-setopt correctall
+# setopt correctall
 setopt list_ambiguous
 
 # `kill' completion.
@@ -67,8 +70,13 @@ if [ `uname` = "Darwin" ]; then
   alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
   alias mysql_start="mysql.server start"
   alias mysql_stop="mysql.server stop"
-  alias ida="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.3/idaq.exe"
-  alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.3/idaq64.exe"
+  alias ida="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.6/idaq.exe"
+  alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 6.6/idaq64.exe"
+  alias awk=gawk
+  alias grep=ggrep
+  alias sed=gsed
+  alias zcat=gzcat
+  alias objdump=gobjdump
 else
   alias ls="ls --color=auto -G"
   alias netstat="sudo netstat -pant"
@@ -81,10 +89,12 @@ alias f="noglob find -name"
 alias scp="noglob scp"
 alias ll="ls -lah"
 alias gdb="gdb -q"
+alias myip="dig +short @resolver1.opendns.com myip.opendns.com"
+
 
 ##
 # FUNCTIONS
-## 
+##
 function ehd() {
 	hexdump -v -e '"\\\x" 1/1 "%02x"' $1
 		# 1/1: iteration count/byte count
@@ -93,7 +103,7 @@ function ehd() {
 if [ `uname` = "Darwin" ]; then
   funtion trash() {
     mv -v $* /Users/warrick/.Trash/;
-  }	
+  }
 fi
 
 function title() {
@@ -104,58 +114,89 @@ function tvnc() {
   ssh -t -L 5900:localhost:5900 $1 'x11vnc -localhost -display :0'
 }
 
-function hist() { 
+function hist() {
   grep "$*" ~/.zsh_history \
-    | cut -d';' -f2-; 
+    | cut -d';' -f2-;
 }
 
 ##
 # KEY BINDINGS
-## 
+##
 
-bindkey -v                # Vi bindings.
-bindkey '^k' vi-cmd-mode  # Ctrl-k to NORMAL mode.
+# bindkey -v                # Vi bindings.
+# bindkey '^k' vi-cmd-mode  # Ctrl-k to NORMAL mode.
 
 # Little bit of Emacs.
-bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
-bindkey -M viins '^r' history-incremental-pattern-search-backward
-bindkey -M viins '^u' backward-kill-line
-bindkey -M viins '^y' yank
-
-bindkey -M vicmd '^a' beginning-of-line
-bindkey -M vicmd '^e' end-of-line
-bindkey -M vicmd 'yy' vi-yank-whole-line
-
-_cut_inner_word() {
-  setopt localoptions extendedglob
-  LBUFFER=${LBUFFER%%[^ ]#}
-  RBUFFER=${RBUFFER##[^ ]#}
-}
-zle -N cut-inner-word _cut_inner_word
-bindkey '^xc' cut-inner-word
-bindkey -M vicmd 'ciw' cut-inner-word
-
+# bindkey -M viins '^a' beginning-of-line
+# bindkey -M viins '^e' end-of-line
+# bindkey -M viins '^r' history-incremental-pattern-search-backward
+# bindkey -M viins '^u' backward-kill-line
+# bindkey -M viins '^y' yank
+#
+# bindkey -M vicmd '^a' beginning-of-line
+# bindkey -M vicmd '^e' end-of-line
+# bindkey -M vicmd 'yy' vi-yank-whole-line
+#
+# _cut_inner_word() {
+#   setopt localoptions extendedglob
+#   LBUFFER=${LBUFFER%%[^ ]#}
+#   RBUFFER=${RBUFFER##[^ ]#}
+# }
+# zle -N cut-inner-word _cut_inner_word
+# bindkey '^xc' cut-inner-word
+# bindkey -M vicmd 'ciw' cut-inner-word
+#
 # VIM mode prompt.
-function zle-line-init zle-keymap-select {
-  VIM_PROMPT="[%{$fg[yellow]%}NORMAL%{$reset_color%}]"
-  RPROMPT="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
-  zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+# function zle-line-init zle-keymap-select {
+#   VIM_PROMPT="[%{$fg[yellow]%}NORMAL%{$reset_color%}]"
+#   RPROMPT="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
+#   zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+#
+# function zle-line-finish {
+#   vim_mode=$vim_ins_mode
+# }
+# zle -N zle-line-finish
 
-function zle-line-finish {
-  vim_mode=$vim_ins_mode
-}
-zle -N zle-line-finish
-  
 ##
-# LANGUAGES
+# PATH
+##
+export PATH="/usr/local/sbin:$PATH"
+
+##
+# UTILS
 ##
 
 # OPAM configuration.
-. /home/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+. /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-# RVM configuration.
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# RBENV
+eval "$(rbenv init -)"
+
+# AUTOJUMP
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# VIRTUALENV
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
+
+export HOMEBREW_GITHUB_API_TOKEN=cb429dd7a354caca211d978ffc16abaf3ffa4e03
+
+# GO
+export GOPATH=$HOME/Code/go
+
+# DOCKER
+function docker-env () {
+  eval "$(docker-machine env $1)"
+}
+alias denv="docker-env"
+denv default
+alias dcocker="docker"
+alias d="docker"
+alias dps="docker ps -a"
+alias dm="docker-machine"
+
