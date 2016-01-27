@@ -184,8 +184,6 @@ export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
 
-export HOMEBREW_GITHUB_API_TOKEN=cb429dd7a354caca211d978ffc16abaf3ffa4e03
-
 # GO
 export GOPATH=$HOME/Code/go
 
