@@ -43,7 +43,7 @@ configd = awful.util.getdir("config")
 terminal = "terminator"
 
 -- Theme
-beautiful.init(configd .. "/themes/default/theme.lua")
+beautiful.init(configd .. "/themes/custom/theme.lua")
 
 -- Editor
 editor = os.getenv("EDITOR") or "vim"
@@ -265,9 +265,12 @@ awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, 
 awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
 -- Volume
-awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+") end),
-awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-") end),
-awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer sset Master toggle") end),
+awful.key({ }, "XF86AudioRaiseVolume", 
+  function () awful.util.spawn("amixer set Master 9%+") end),
+awful.key({ }, "XF86AudioLowerVolume", 
+  function () awful.util.spawn("amixer set Master 9%-") end),
+awful.key({ }, "XF86AudioMute", 
+  function () awful.util.spawn("amixer sset Master toggle") end),
 
 -- Prompt
 awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
