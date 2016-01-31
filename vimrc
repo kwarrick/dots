@@ -22,7 +22,7 @@ Plugin 'airblade/vim-gitgutter'
 
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'derekwyatt/vim-scala'
-Plugin 'jnwhiteh/vim-golang'
+Plugin 'fatih/vim-go'
 
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -49,7 +49,7 @@ nmap <leader>e <Plug>NormalModeSendToTmux
 nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
@@ -91,7 +91,7 @@ if has('gui_running')
   set cursorline                  " highlight cursor line
 
   if has("gui_macvim")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h18
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h14
   elseif has("gui_gtk2")
     set guioptions-=T           "remove toolbar
     set guioptions-=r           "remove right-hand scroll bar
@@ -129,9 +129,9 @@ nnoremap <leader>n :noh<cr>
 " show newslines and tabs
 nnoremap <leader>l :set list!<cr>
 
-" vertical/horizontal split
-nnoremap <leader>v <C-w>v
-nnoremap <leader>s <C-w>s
+" highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
 
 " no pipe character for split divider
 set fillchars+=vert:\ 
