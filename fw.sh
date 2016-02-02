@@ -1,6 +1,12 @@
 #!/bin/bash
 # Minimal firewall with IPTABLES.
 
+# Make these rules persistent:
+#   sudo ./fw.sh
+#   sudo sh -c "iptables-save > /etc/iptables.rules"
+# Add the following to the interface in `/etc/network/interfaces`:
+#   pre-up iptables-resotre < /etc/iptables.rules
+
 set -e
 set -u
 
@@ -26,6 +32,13 @@ iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 
 iptables -A INPUT -j REJECT --reject-with icmp-proto-unreachable
 
+# Log blocked TCP traffic.
+iptables -I INPUT 2 -p tcp -m limit --limit 5/min -j LOG \
+  --log-prefix "iptables denied: " --log-level 7
+
 # Allow services.
 iptables -I INPUT -p tcp --dport 22 -j ACCEPT
 
+
+exit 0
+# EOF
