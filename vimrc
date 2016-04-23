@@ -11,6 +11,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'majutsushi/tagbar'
@@ -67,7 +68,7 @@ let g:syntastic_ocaml_checkers = ['merlin']
 autocmd vimenter * if !argc() | NERDTree | endif
 let NERDTreeMinimalUI=1
 let NERDTreeWinPos='right'
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore=['\.pyc$', '__pycache__[[dir]]']
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<c-h>"
@@ -79,7 +80,7 @@ let g:UltiSnipsEditSplit="horizontal"
 syntax enable                   " syntax highlighting
 filetype on
 filetype indent on              " load file type specific indentation
-filetype plugin on              " load file type specific plugins 
+filetype plugin on              " load file type specific plugins
 
 set noswapfile
 
@@ -98,7 +99,7 @@ if has('gui_running')
     set guioptions-=l           "remove left-hand scroll bar
     set guioptions-=b           "remove bottom scroll bar
     set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 12
-  end  
+  end
 
   set background=dark
   colorscheme blackboard
@@ -107,7 +108,9 @@ endif
 set number                      " line numbers
 set showcmd                     " display incomplete commands
 set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
-set colorcolumn=80              " highlight column 80
+set colorcolumn=81              " highlight column 80
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235
 
 "" Whitespace
 set nowrap                      " don't wrap lines
@@ -119,7 +122,7 @@ set backspace=indent,eol,start  " backspace through everything in insert mode
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive ...
-set smartcase                   " ... unless they contain at least one capital 
+set smartcase                   " ... unless they contain at least one capital
 
 "" Key Bindings
 
@@ -134,7 +137,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
 
 " no pipe character for split divider
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 
 " increase/decrease vsplit size
 map <C-l> <C-w>>
@@ -152,7 +155,7 @@ map <Right> <Nop>
 map <Up> <Nop>
 map <Down> <Nop>
 
-" enable shift-tab 
+" enable shift-tab
 inoremap <S-Tab> <Esc><<i
 
 " new lines normal mode
@@ -184,16 +187,16 @@ nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 
 "" Abbreviations
 " common command mistakes
-cabbrev W w 
+cabbrev W w
 cabbrev Q q
 cabbrev E e
 
 " File Customizations
 if has("autocmd")
   filetype on
-  autocmd FileType html setlocal wrap linebreak spell spelllang=en_us  
-  autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us  
-  autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us  
+  autocmd FileType html setlocal wrap linebreak spell spelllang=en_us
+  autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us
+  autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
   autocmd BufRead /tmp/psql.edit.* setlocal ft=sql
   autocmd BufNewFile,BufRead *.ejs set filetype=html
