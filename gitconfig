@@ -6,6 +6,7 @@
   pager = less -r
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [color]
 	ui = auto
 [alias]
