@@ -1,20 +1,20 @@
 [user]
-	name = Kevin Warrick
-	email = kevinjwarrick@gmail.com
+  name = Kevin Warrick
+  email = kevinjwarrick@gmail.com
 [core]
-	editor = vim
+  editor = vim
   pager = less -r
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
 [color]
-	ui = auto
+  ui = auto
 [alias]
-	s = status -sb
+  s = status -sb
   co = checkout
   ci = commit
   ca = commit -a
-	unstage = reset HEAD --
-	last = log -1 HEAD
+  unstage = reset HEAD --
+  last = log -1 HEAD
 [push]
   default = simple
