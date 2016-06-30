@@ -11,43 +11,21 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'airblade/vim-gitgutter'
-
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'fatih/vim-go'
-
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'jgdavey/tslime.vim'
-
 Plugin 'SirVer/ultisnips'
-
 Plugin 'ervandew/supertab'
-
-Plugin 'michaeljsmith/vim-indent-object'
-
-" NERDTree
-nnoremap <silent><leader>t :NERDTreeToggle<CR>
+Plugin 'scrooloose/syntastic'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " tComment
+Plugin 'tomtom/tcomment_vim'
 map <leader>c <c-_><c-_>
 
 " Tagbar
+Plugin 'majutsushi/tagbar'
 nnoremap <leader>r :TagbarToggle<CR>
-
-" tslime
-vmap <leader>e <Plug>SendSelectionToTmux
-nmap <leader>e <Plug>NormalModeSendToTmux
-nmap <leader>er <Plug>SetTmuxVars
 
 " Powerline
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -59,24 +37,13 @@ set term=xterm-256color
 set termencoding=utf-8
 set laststatus=2
 
-" OCaml Merlin
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:syntastic_ocaml_checkers = ['merlin']
-
-" NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
-let NERDTreeMinimalUI=1
-let NERDTreeWinPos='right'
-let NERDTreeIgnore=['\.pyc$', '__pycache__[[dir]]']
-
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<c-h>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 let g:UltiSnipsEditSplit="horizontal"
 
-"" Display
+"" Appearance
 syntax enable                   " syntax highlighting
 filetype on
 filetype indent on              " load file type specific indentation
@@ -137,7 +104,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
 
 " no pipe character for split divider
-set fillchars+=vert:\
+set fillchars+=vert:\ 
 
 " increase/decrease vsplit size
 map <C-l> <C-w>>
@@ -148,12 +115,6 @@ nnoremap <leader>y "*y
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wq :wq<cr>
-
-" disable arrows
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
 
 " enable shift-tab
 inoremap <S-Tab> <Esc><<i
@@ -176,7 +137,7 @@ nnoremap gp `[v`]
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
 
-" toggles
+" misc toggles
 nmap \l :setlocal number!<CR>
 nmap \o :set paste!<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
@@ -197,8 +158,26 @@ if has("autocmd")
   autocmd FileType html setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us
-  autocmd FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
-  autocmd BufRead /tmp/psql.edit.* setlocal ft=sql
   autocmd BufNewFile,BufRead *.ejs set filetype=html
 endif
 
+" netrw
+nnoremap <silent> <leader>t :Lexplore<cr>
+" hide banner
+let g:netrw_banner = 0
+" hide swp, DS_Store files
+let g:netrw_list_hide = '.*\.swp$,\.DS_Store'
+" set tree style listing
+let g:netrw_liststyle = 3
+" display directories first
+let g:netrw_sort_sequence = '[\/]$'
+" ignore case on sorting
+let g:netrw_sort_options = 'i'
+" vspilt netrw to the left window
+let g:netrw_altv = 1
+" 30% of the screen for the netrw window, 70% for the file window
+let g:netrw_winsize = 30
+" open file in a previous buffer (right window)
+let g:netrw_browse_split = 4
+" buffer setting
+let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap number'
