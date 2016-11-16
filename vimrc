@@ -165,7 +165,7 @@ nnoremap <silent> <leader>t :Lexplore<cr>
 " hide banner
 let g:netrw_banner = 0
 " hide swp, DS_Store files
-let g:netrw_list_hide = '.*\.swp$,\.DS_Store'
+let g:netrw_list_hide = '.*\.swp$,\.DS_Store,.*\.pyc,.git'
 " set tree style listing
 let g:netrw_liststyle = 3
 " display directories first
