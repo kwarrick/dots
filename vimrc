@@ -14,10 +14,9 @@ Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'ervandew/supertab'
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'christoomey/vim-tmux-navigator'
 
 " tComment
 Plugin 'tomtom/tcomment_vim'
