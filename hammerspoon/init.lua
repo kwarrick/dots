@@ -36,7 +36,7 @@ end)
 -- Window movement
 hs.hotkey.bind({'cmd', 'shift'}, 'return', kwmc('tree rotate 90'))
 
-for i=1,6 do 
+for i=1,6 do
   -- Move window to space `i'
   hs.hotkey.bind({'cmd', 'shift'}, '' .. i, kwmc('window -m space ' .. i))
 end
@@ -54,6 +54,19 @@ hs.hotkey.bind({'cmd', 'shift'}, 'space', function()
   hs.alert.show(mode)
   kwmc_{'space', '-t', mode}
 end)
+
+-- Floating window movements
+function moveWindow(x, y, w, h)
+  return function()
+    local win = hs.window.focusedWindow()
+    local rect = hs.geometry.new(x, y, w, h)
+    win:moveToUnit(rect, 0) end
+end
+hs.hotkey.bind({'ctrl', 'alt'}, 'h', moveWindow(0, 0, 0.5, 1))
+hs.hotkey.bind({'ctrl', 'alt'}, 'j', moveWindow(0, 0.5, 1, 0.5))
+hs.hotkey.bind({'ctrl', 'alt'}, 'k', moveWindow(0, 0, 1, 0.5))
+hs.hotkey.bind({'ctrl', 'alt'}, 'l', moveWindow(0.5, 0, 0.5, 1))
+hs.hotkey.bind({'ctrl', 'alt'}, 'return', moveWindow(0, 0, 1, 1))
 
 -- Vim easy-motion for applications
 hs.hotkey.bind('alt', 'tab', hs.hints.windowHints)
