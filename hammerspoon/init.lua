@@ -1,91 +1,59 @@
--- Vim easy-motion for applications.
-hs.hotkey.bind("alt", "tab", hs.hints.windowHints)
-
--- Application shortcuts.
-hs.hotkey.bind({"cmd", "shift"}, "1", function()
-  hs.application.launchOrFocus("iTerm")
-end)
-
-hs.hotkey.bind({"cmd", "shift"}, "2", function()
-  hs.application.launchOrFocus("Google Chrome")
-end)
-
--- Window movements (simple).
-function moveWindow(x, y, w, h)
-  return function()
-    local win = hs.window.focusedWindow()
-    local rect = hs.geometry.new(x, y, w, h)
-    win:moveToUnit(rect, 0) end
+-- KWM integration
+function kwmc_(args)
+    hs.task.new('/usr/local/bin/kwmc', nil, args):start()
 end
-hs.hotkey.bind({'cmd', 'shift'}, 'h', moveWindow(0, 0, 0.5, 1))
--- hs.hotkey.bind({'cmd', 'shift'}, 'j', moveWindow(0, 0.5, 1, 0.5))
--- hs.hotkey.bind({'cmd', 'shift'}, 'k', moveWindow(0, 0, 1, 0.5))
-hs.hotkey.bind({'cmd', 'shift'}, 'l', moveWindow(0.5, 0, 0.5, 1))
-hs.hotkey.bind({'cmd', 'shift'}, 'return', moveWindow(0, 0, 1, 1))
 
--- Window movement and navigation (complex).
+function kwmc(cmd)
+  local args = hs.fnutils.split(cmd, ' ', nil, true)
+  return (function() kwmc_(args) end)
+end
 
--- disable animation
-hs.window.animationDuration = 0
+-- Window navigation
+hs.hotkey.bind({'cmd', 'shift'}, 'j', kwmc('window -f next'))
+hs.hotkey.bind({'cmd', 'shift'}, 'k', kwmc('window -f prev'))
 
--- no window margins
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
+-- Window resizing
+hs.hotkey.bind({'cmd', 'shift'}, 'm', kwmc('window -z fullscreen'))
+hs.hotkey.bind({'cmd', 'shift'}, 'f', kwmc('window -t focused'))
+hs.hotkey.bind({'cmd', 'shift'}, 'o', kwmc('window -m display next'))
 
--- initial grid dimensions
-hs.grid.GRIDWIDTH = 7
-hs.grid.GRIDHEIGHT = 3
-
--- show grid
-hs.hotkey.bind({'cmd', 'alt'}, '/', hs.grid.show)
-
--- snap to grid
-hs.hotkey.bind({'cmd', 'alt'}, ';', function()
-  hs.grid.snap(hs.window.focusedWindow())
-end)
-hs.hotkey.bind({'cmd', 'alt'}, "'", function()
-  hs.fnutil.map(hs.window.visibleWindows(), hs.grid.snap)
+hs.hotkey.bind({'cmd', 'shift'}, 'h', function()
+  local window = hs.window.frontmostWindow()
+  local adjacent = window:windowsToEast(nil, nil, true)
+  local direction = (#adjacent) > 0 and 'east' or 'west'
+  local action = (#adjacent) > 0 and 'reduce' or 'expand'
+  kwmc_{'window', '-c', action, '0.01', direction}
 end)
 
--- adjust grid size
-hs.hotkey.bind({'cmd', 'alt'}, '=', function() hs.grid.adjustWidth( 1) end)
-hs.hotkey.bind({'cmd', 'alt'}, '-', function() hs.grid.adjustWidth(-1) end)
-hs.hotkey.bind({'cmd', 'alt'}, ']', function() hs.grid.adjustHeight( 1) end)
-hs.hotkey.bind({'cmd', 'alt'}, '[', function() hs.grid.adjustHeight(-1) end)
-
--- resize windows
-hs.hotkey.bind({'cmd', 'alt'}, 'h', hs.grid.resizeWindowThinner)
-hs.hotkey.bind({'cmd', 'alt'}, 'j', hs.grid.resizeWindowShorter)
-hs.hotkey.bind({'cmd', 'alt'}, 'k', hs.grid.resizeWindowTaller)
-hs.hotkey.bind({'cmd', 'alt'}, 'l', hs.grid.resizeWindowWider)
-
--- move windows
-hs.hotkey.bind({'cmd', 'alt', 'ctrl'}, 'h', hs.grid.pushWindowLeft)
-hs.hotkey.bind({'cmd', 'alt', 'ctrl'}, 'j', hs.grid.pushWindowDown)
-hs.hotkey.bind({'cmd', 'alt', 'ctrl'}, 'k', hs.grid.pushWindowUp)
-hs.hotkey.bind({'cmd', 'alt', 'ctrl'}, 'l', hs.grid.pushWindowRight)
-
--- focus window next/prev
-hs.hotkey.bind({'cmd', 'shift'}, 'j', function()
-  local windows = hs.window.filter.new()
-    :setCurrentSpace(true)
-    :setSortOrder(hs.window.filter.sortByCreated)
-    :getWindows()
-  local current = hs.window.frontmostWindow()
-  local i = hs.fnutils.indexOf(windows, current) or 1
-  windows[i % (#windows) + 1]:focus()
+hs.hotkey.bind({'cmd', 'shift'}, 'l', function()
+  local window = hs.window.frontmostWindow()
+  local adjacent = window:windowsToEast(nil, nil, true)
+  local direction = (#adjacent) > 0 and 'east' or 'west'
+  local action = (#adjacent) > 0 and 'expand' or 'reduce'
+  kwmc_{'window', '-c', action, '0.01', direction}
 end)
 
-hs.hotkey.bind({'cmd', 'shift'}, 'k', function()
-  local windows = hs.window.filter.new()
-    :setCurrentSpace(true)
-    :setSortOrder(hs.window.filter.sortByFocused)
-    :getWindows()
-  windows[2]:focus()
+-- Window movement
+hs.hotkey.bind({'cmd', 'shift'}, 'return', kwmc('tree rotate 90'))
+
+for i=1,6 do 
+  -- Move window to space `i'
+  hs.hotkey.bind({'cmd', 'shift'}, '' .. i, kwmc('window -m space ' .. i))
+end
+
+-- Padding and gaps.
+hs.hotkey.bind({'ctrl', 'alt'}, '-', kwmc('space -p increase all'))
+hs.hotkey.bind({'ctrl', 'alt'}, '=', kwmc('space -p decrease all'))
+hs.hotkey.bind({'ctrl', 'alt'}, '[', kwmc('space -g decrease all'))
+hs.hotkey.bind({'ctrl', 'alt'}, ']', kwmc('space -g increase all'))
+
+-- Tiling modes
+local modes = hs.fnutils.cycle{'bsp', 'float', 'monocle'}
+hs.hotkey.bind({'cmd', 'shift'}, 'space', function()
+  local mode = modes()
+  hs.alert.show(mode)
+  kwmc_{'space', '-t', mode}
 end)
 
--- move window to next screen
-hs.hotkey.bind({'cmd', 'shift'}, 'o', hs.grid.pushWindowNextScreen)
-
--- maximize
-hs.hotkey.bind({'cmd', 'shift'}, 'm', hs.grid.maximizeWindow)
+-- Vim easy-motion for applications
+hs.hotkey.bind('alt', 'tab', hs.hints.windowHints)
