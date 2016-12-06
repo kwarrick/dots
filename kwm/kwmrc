@@ -52,8 +52,9 @@ kwmc config border marked color 0xFFCC5577
 kwmc config border marked radius 6
 
 # Application specific tiling rules.
+# iTerm: Preferences > Profiles > Window > Style > No Title Bar
+# iTerm: Preferences > Pointer > Focus follows mouse
 kwmc rule owner="iTerm2" properties={role="AXDialog"}
-kwmc rule owner="iTerm2" name="border" properties={float="true"} except="less"
 
 # Blacklist applications
 kwmc rule owner="Steam" properties={float="true"}
