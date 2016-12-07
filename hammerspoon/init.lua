@@ -17,9 +17,14 @@ hs.hotkey.bind({'cmd', 'shift'}, 'm', kwmc('window -z fullscreen'))
 hs.hotkey.bind({'cmd', 'shift'}, 'f', kwmc('window -t focused'))
 hs.hotkey.bind({'cmd', 'shift'}, 'o', kwmc('window -m display next'))
 
+-- Reproduce Awesome's resizing, which a fixed shortcut for
+--    $ kwmc window -c reduce 0.05 focused
+--    $ kwmc window -c expand 0.05 focused
+-- will not affect.
 hs.hotkey.bind({'cmd', 'shift'}, 'h', function()
   local window = hs.window.frontmostWindow()
-  local adjacent = window:windowsToEast(nil, nil, true)
+  local others = window:otherWindowsSameScreen()
+  local adjacent = window:windowsToEast(others, false, true)
   local direction = (#adjacent) > 0 and 'east' or 'west'
   local action = (#adjacent) > 0 and 'reduce' or 'expand'
   kwmc_{'window', '-c', action, '0.01', direction}
@@ -27,7 +32,8 @@ end)
 
 hs.hotkey.bind({'cmd', 'shift'}, 'l', function()
   local window = hs.window.frontmostWindow()
-  local adjacent = window:windowsToEast(nil, nil, true)
+  local others = window:otherWindowsSameScreen()
+  local adjacent = window:windowsToEast(others, false, true)
   local direction = (#adjacent) > 0 and 'east' or 'west'
   local action = (#adjacent) > 0 and 'expand' or 'reduce'
   kwmc_{'window', '-c', action, '0.01', direction}
