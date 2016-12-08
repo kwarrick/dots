@@ -86,8 +86,8 @@ hs.hotkey.bind({'cmd', 'shift'}, 'space', function()
   hs.alert.show(mode)
   kwmc_{'space', '-t', mode}
 end)
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'h', kwmc('window -s next'))
-hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'l', kwmc('window -s prev'))
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'j', kwmc('window -s next'))
+hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'k', kwmc('window -s prev'))
 hs.hotkey.bind({'cmd', 'ctrl', 'shift'}, 'space', kwmc('window -c type toggle'))
 
 --------------------------------------------------------------------------------
