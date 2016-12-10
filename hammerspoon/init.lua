@@ -106,9 +106,9 @@ end
 hs.hotkey.bind({'cmd', 'shift'}, 'return', spawnTerminal)
 
 --------------------------------------------------------------------------------
--- Caps lock bindings
+-- FN + HJKL for arrows
 --------------------------------------------------------------------------------
-function capslockHandler(event)
+function fnArrows(event)
   if (event:getFlags().fn) then
     if (event:getKeyCode() == hs.keycodes.map.h) then
       return true, {hs.eventtap.event.newKeyEvent({}, 'left', true)}
@@ -121,5 +121,5 @@ function capslockHandler(event)
     end
   end
 end
-local tap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, capslockHandler)
+local tap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, fnArrows)
 tap:start()
