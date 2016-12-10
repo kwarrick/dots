@@ -83,6 +83,7 @@ hs.hotkey.bind({'ctrl', 'alt'}, 'return', moveWindow(0, 0, 1, 1))
 local modes = hs.fnutils.cycle{'bsp', 'float', 'monocle'}
 hs.hotkey.bind({'cmd', 'shift'}, 'space', function()
   local mode = modes()
+  hs.alert.closeAll()
   hs.alert.show(mode)
   kwmc_{'space', '-t', mode}
 end)
