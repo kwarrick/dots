@@ -104,3 +104,22 @@ function spawnTerminal()
   end
 end
 hs.hotkey.bind({'cmd', 'shift'}, 'return', spawnTerminal)
+
+--------------------------------------------------------------------------------
+-- Caps lock bindings
+--------------------------------------------------------------------------------
+function capslockHandler(event)
+  if (event:getFlags().fn) then
+    if (event:getKeyCode() == hs.keycodes.map.h) then
+      return true, {hs.eventtap.event.newKeyEvent({}, 'left', true)}
+    elseif (event:getKeyCode() == hs.keycodes.map.j) then
+      return true, {hs.eventtap.event.newKeyEvent({}, 'down', true)}
+    elseif (event:getKeyCode() == hs.keycodes.map.k) then
+      return true, {hs.eventtap.event.newKeyEvent({}, 'up', true)}
+    elseif (event:getKeyCode() == hs.keycodes.map.l) then
+      return true, {hs.eventtap.event.newKeyEvent({}, 'right', true)}
+    end
+  end
+end
+local tap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, capslockHandler)
+tap:start()
