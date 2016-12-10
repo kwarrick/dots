@@ -17,6 +17,12 @@ Plugin 'ervandew/supertab'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'scrooloose/nerdtree'
+
+" NERDTree
+map <leader>t :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 " tComment
 Plugin 'tomtom/tcomment_vim'
@@ -42,7 +48,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 let g:UltiSnipsEditSplit="horizontal"
 
-"" Appearance
+" Appearance
 syntax enable                   " syntax highlighting
 filetype on
 filetype indent on              " load file type specific indentation
@@ -159,24 +165,3 @@ if has("autocmd")
   autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us
   autocmd BufNewFile,BufRead *.ejs set filetype=html
 endif
-
-" netrw
-nnoremap <silent> <leader>t :Lexplore<cr>
-" hide banner
-let g:netrw_banner = 0
-" hide swp, DS_Store files
-let g:netrw_list_hide = '.*\.swp$,\.DS_Store,.*\.pyc,.git'
-" set tree style listing
-let g:netrw_liststyle = 3
-" display directories first
-let g:netrw_sort_sequence = '[\/]$'
-" ignore case on sorting
-let g:netrw_sort_options = 'i'
-" vspilt netrw to the left window
-let g:netrw_altv = 1
-" 30% of the screen for the netrw window, 70% for the file window
-let g:netrw_winsize = 30
-" open file in a previous buffer (right window)
-let g:netrw_browse_split = 4
-" buffer setting
-let g:netrw_bufsettings = 'nomodifiable nomodified readonly nobuflisted nowrap number'
