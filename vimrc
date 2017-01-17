@@ -98,12 +98,6 @@ set smartcase                   " ... unless they contain at least one capital
 
 "" Key Bindings
 
-" no highlight
-nnoremap <leader>n :noh<cr>
-
-" show newslines and tabs
-nnoremap <leader>l :set list!<cr>
-
 " highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+\%#\@<!$/
@@ -115,21 +109,12 @@ set fillchars+=vert:\
 map <C-l> <C-w>>
 map <C-h> <C-w><
 
-" yank, quit, write, write/quit
-nnoremap <leader>y "*y
-nnoremap <leader>q :q<cr>
-nnoremap <leader>w :w<cr>
-nnoremap <leader>wq :wq<cr>
-
 " enable shift-tab
 inoremap <S-Tab> <Esc><<i
 
 " new lines normal mode
 nnoremap <S-Enter> O<ESC>
 nnoremap <Enter> o<ESC>
-
-" toggle paste mode
-set pastetoggle=<leader>p
 
 " touch of emacs
 inoremap <C-a> <Home>
@@ -142,9 +127,11 @@ nnoremap gp `[v`]
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
 
-" misc toggles
-nmap \l :setlocal number!<CR>
-nmap \o :set paste!<CR>
+" toggles
+nmap \h :noh <CR>
+nmap \n :setlocal number!<CR>
+nmap \l :set list!<cr>
+nmap \p :set paste!<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
