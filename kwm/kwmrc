@@ -55,6 +55,7 @@ kwmc config border marked radius 4
 # iTerm: Preferences > Profiles > Window > Style > No Title Bar
 # iTerm: Preferences > Pointer > Focus follows mouse
 kwmc rule owner="iTerm2" properties={role="AXDialog"}
+kwmc rule owner="Emacs" properties={role="AXStandardWindow"}
 
 # Blacklist applications
 kwmc rule owner="Steam" properties={float="true"}
