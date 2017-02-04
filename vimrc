@@ -61,8 +61,6 @@ if has('mouse')
 end
 
 if has('gui_running')
-  set cursorline                  " highlight cursor line
-
   if has("gui_macvim")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h14
   elseif has("gui_gtk2")
@@ -83,6 +81,8 @@ set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
 set colorcolumn=81              " highlight column 80
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235
+set cursorline                  " highlight current line
+set cursorcolumn                " highlight current column
 
 "" Whitespace
 set nowrap                      " don't wrap lines
