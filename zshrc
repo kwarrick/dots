@@ -1,69 +1,68 @@
-##
-# PROMPT
-##
-setopt prompt_subst               # Enable prompt substitutions.
-autoload -U colors && colors      # Enable colors.
-autoload -U promptinit            # Intialize advanced prompt support.
+# PATH
+################################################################################
+export PATH="/usr/local/sbin:$PATH"
+export EDITOR=vim
 
-autoload -U select-word-style
-select-word-style bash
-
-PCOLOR=yellow
-function ssh_connection() {
-  if [[ -n $SSH_CONNECTION ]]; then
-    echo " %{$fg_bold[yellow]%}⚡ "
-  fi
-}
-PROMPT="%{$fg[$PCOLOR]%}[%n%{$reset_color%}@%{$fg[$PCOLOR]%}%m %{$fg[blue]%}%1~%{$fg[$PCOLOR]%}]%{$reset_color%} ${ssh_connection} %# "
-RPROMPT=""
-
-##
-# COMPLETION
-##
-autoload -U compinit              # Enable zsh tab-completion system.
-compinit
-setopt complete_in_word
-setopt always_to_end
-# setopt correctall
-setopt list_ambiguous
-
-# `kill' completion.
-zstyle ':completion:*:*:*:*:*' menu select
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
-
-compdef _gnu_generic gcc
-compdef _gnu_generic gdb
-
-##
-# VARIABLES
-##
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-##
+
+# PROMPT
+################################################################################
+autoload -U promptinit
+autoload -U colors
+autoload -U select-word-style
+
+promptinit
+colors
+select-word-style bash
+
+prompt adam1
+
+
+# COMPLETION
+################################################################################
+autoload -U zutil
+autoload -U compinit
+autoload -U complist
+
+compinit -i
+zmodload -i zsh/complist
+
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
+zstyle ':completion:*' verbose true
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+
 # OPTIONS
-##
-setopt extended_history           # Store begging time: elapsed seconds: command.
-setopt hist_expire_dups_first
-setopt hist_ignore_dups           # Ignore duplication command history list.
-setopt hist_ignore_space
-setopt hist_verify
-setopt inc_append_history
-setopt share_history              # Share command history data across terminals.
-setopt no_beep
-setopt extended_glob              # Treat #,~,^ as part of patterns for files.
-setopt interactivecomments        # Allow comments in interactive mode.
-setopt hist_ignore_space          # Ignore entries with leading spaces.
+################################################################################
 
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
+setopt NO_BEEP
+setopt CHECK_JOBS
+setopt INTERACTIVE_COMMENTS
 
-##
+# Glob
+setopt EXTENDED_GLOB
+
+# History
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+
+# Completion
+setopt COMPLETE_IN_WORD
+setopt AUTO_MENU
+
+
 # ALIASES
-##
+################################################################################
 if [ `uname` = "Darwin" ]; then
   alias ls="ls -G"
   alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
@@ -77,6 +76,7 @@ if [ `uname` = "Darwin" ]; then
   alias sed=gsed
   alias zcat=gzcat
   alias objdump=gobjdump
+  alias netstat="sudo netstat -A -n -p tcp -v -a"
 else
   alias ls="ls --color=auto -G"
   alias netstat="sudo netstat -pant"
@@ -91,10 +91,16 @@ alias ll="ls -lah"
 alias gdb="gdb -q"
 alias myip="dig +short @resolver1.opendns.com myip.opendns.com"
 
+# Docker
+alias denv="docker-env"
+alias dcoker="docker"
+alias d="docker"
+alias dps="docker ps -a"
+alias dm="docker-machine"
 
-##
+
 # FUNCTIONS
-##
+################################################################################
 function ehd() {
 	hexdump -v -e '"\\\x" 1/1 "%02x"' $1
 		# 1/1: iteration count/byte count
@@ -119,82 +125,26 @@ function hist() {
     | cut -d';' -f2-;
 }
 
-##
-# KEY BINDINGS
-##
+function docker-env () {
+  eval "$(docker-machine env $*)"
+}
 
-# bindkey -v                # Vi bindings.
-# bindkey '^k' vi-cmd-mode  # Ctrl-k to NORMAL mode.
 
-# Little bit of Emacs.
-# bindkey -M viins '^a' beginning-of-line
-# bindkey -M viins '^e' end-of-line
-# bindkey -M viins '^r' history-incremental-pattern-search-backward
-# bindkey -M viins '^u' backward-kill-line
-# bindkey -M viins '^y' yank
-#
-# bindkey -M vicmd '^a' beginning-of-line
-# bindkey -M vicmd '^e' end-of-line
-# bindkey -M vicmd 'yy' vi-yank-whole-line
-#
-# _cut_inner_word() {
-#   setopt localoptions extendedglob
-#   LBUFFER=${LBUFFER%%[^ ]#}
-#   RBUFFER=${RBUFFER##[^ ]#}
-# }
-# zle -N cut-inner-word _cut_inner_word
-# bindkey '^xc' cut-inner-word
-# bindkey -M vicmd 'ciw' cut-inner-word
-#
-# VIM mode prompt.
-# function zle-line-init zle-keymap-select {
-#   VIM_PROMPT="[%{$fg[yellow]%}NORMAL%{$reset_color%}]"
-#   RPROMPT="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
-#   zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-#
-# function zle-line-finish {
-#   vim_mode=$vim_ins_mode
-# }
-# zle -N zle-line-finish
-
-##
-# PATH
-##
-export PATH="/usr/local/sbin:$PATH"
-
-##
 # UTILS
-##
+################################################################################
 
 # OPAM configuration.
-. /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# . /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # RBENV
 eval "$(rbenv init -)"
 
+# PYENV
+eval "$(pyenv init -)"
+
 # AUTOJUMP
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# VIRTUALENV
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
-
 # GO
 export GOPATH=$HOME/Code/go
-
-# DOCKER
-function docker-env () {
-  eval "$(docker-machine env $1)"
-}
-alias denv="docker-env"
-denv default
-alias dcocker="docker"
-alias d="docker"
-alias dps="docker ps -a"
-alias dm="docker-machine"
 
