@@ -60,21 +60,6 @@ if has('mouse')
   set mouse=a
 end
 
-if has('gui_running')
-  if has("gui_macvim")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h14
-  elseif has("gui_gtk2")
-    set guioptions-=T           "remove toolbar
-    set guioptions-=r           "remove right-hand scroll bar
-    set guioptions-=l           "remove left-hand scroll bar
-    set guioptions-=b           "remove bottom scroll bar
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 12
-  end
-
-  set background=dark
-  colorscheme blackboard
-endif
-
 set number                      " line numbers
 set showcmd                     " display incomplete commands
 set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
