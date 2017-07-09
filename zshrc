@@ -20,6 +20,9 @@ select-word-style bash
 
 prompt adam1
 
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
 
 # COMPLETION
 ################################################################################
