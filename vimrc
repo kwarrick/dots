@@ -4,21 +4,19 @@ set history=100
 set wildmenu
 filetype off
 
-"" Plugins
+" Plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'pangloss/vim-javascript'
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'w0rp/ale'
 
 " NERDTree
+Plugin 'scrooloose/nerdtree'
 map <Leader>t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -42,10 +40,21 @@ set termencoding=utf-8
 set laststatus=2
 
 " Ultisnips
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger="<c-h>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 let g:UltiSnipsEditSplit="horizontal"
+
+" fzf
+Plugin 'junegunn/fzf.vim'
+set rtp+=/usr/local/opt/fzf
+nmap ,b :Buffers<CR>
+nmap ,t :Files<CR>
+nmap ,r :Tags<CR>
+nmap ,m :Marks<CR>
+nmap ,f :Ag<CR>
 
 call vundle#end()
 
@@ -122,7 +131,7 @@ nmap <Leader>T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap <Leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap <Leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap <Leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
-nmap <Leader>s :SyntasticToggleMode<CR>
+nmap <Leader>s :ALEToggle<CR>
 
 "" Abbreviations
 
