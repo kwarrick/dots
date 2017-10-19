@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'tpope/vim-commentary'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'w0rp/ale'
 
@@ -20,10 +21,6 @@ Plugin 'scrooloose/nerdtree'
 map <Leader>t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-
-" tComment
-Plugin 'tomtom/tcomment_vim'
-map <Leader>c <c-_><c-_>
 
 " Tagbar
 Plugin 'majutsushi/tagbar'
