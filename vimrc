@@ -4,33 +4,32 @@ set history=100
 set wildmenu
 filetype off
 
-let mapleader = ","
-
 "" Plugins
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Plugin 'gmarik/vundle'
-Plugin 'kien/ctrlp.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'ervandew/supertab'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdtree'
+Plugin 'vim-syntastic/syntastic'
 
 " NERDTree
-map <leader>t :NERDTreeToggle<CR>
+map <Leader>t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 " tComment
 Plugin 'tomtom/tcomment_vim'
-map <leader>c <c-_><c-_>
+map <Leader>c <c-_><c-_>
 
 " Tagbar
 Plugin 'majutsushi/tagbar'
-nnoremap <leader>r :TagbarToggle<CR>
+nnoremap <Leader>r :TagbarToggle<CR>
 
 " Powerline
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -48,11 +47,13 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 let g:UltiSnipsEditSplit="horizontal"
 
+call vundle#end()
+
 " Appearance
-syntax enable                   " syntax highlighting
+syntax enable                             " syntax highlighting
 filetype on
-filetype indent on              " load file type specific indentation
-filetype plugin on              " load file type specific plugins
+filetype indent on                        " load file type specific indentation
+filetype plugin on                        " load file type specific plugins
 
 set noswapfile
 
@@ -60,20 +61,26 @@ if has('mouse')
   set mouse=a
 end
 
-set number                      " line numbers
-set showcmd                     " display incomplete commands
-set listchars=tab:▸\ ,eol:¬     " set newline and tab chars
-set colorcolumn=81              " highlight column 80
-let &colorcolumn=join(range(81,999),",")
+set number                                " line numbers
+set showcmd                               " display incomplete commands
+set listchars=tab:▸\ ,eol:¬               " set newline and tab chars
+set cursorline                            " highlight current line
+set colorcolumn=81                        " highlight column 80
 highlight ColorColumn ctermbg=235
-set cursorline                  " highlight current line
-set cursorcolumn                " highlight current column
+let &colorcolumn=join(range(81,999),",")
 
 "" Whitespace
-set nowrap                      " don't wrap lines
-set tabstop=2 shiftwidth=2      " a tab is two spaces
-set expandtab                   " use spaces, not tabs
-set backspace=indent,eol,start  " backspace through everything in insert mode
+set nowrap                                " don't wrap lines
+set tabstop=2 shiftwidth=2                " a tab is two spaces
+set expandtab                             " use spaces, not tabs
+set backspace=indent,eol,start            " backspace everything in insert mode
+
+" highlight trailing whitespace
+" highlight ExtraWhitespace ctermbg=red guibg=red
+" match ExtraWhitespace /\s\+\%#\@<!$/
+
+" no pipe character for split divider
+set fillchars+=vert:\ 
 
 "" Searching
 set hlsearch                    " highlight matches
@@ -82,13 +89,6 @@ set ignorecase                  " searches are case insensitive ...
 set smartcase                   " ... unless they contain at least one capital
 
 "" Key Bindings
-
-" highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+\%#\@<!$/
-
-" no pipe character for split divider
-set fillchars+=vert:\ 
 
 " increase/decrease vsplit size
 map <C-l> <C-w>>
@@ -113,17 +113,19 @@ cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
 
 " toggles
-nmap \h :noh <CR>
-nmap \n :setlocal number!<CR>
-nmap \l :set list!<cr>
-nmap \p :set paste!<CR>
-nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
-nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
+nmap <Leader>h :noh <CR>
+nmap <Leader>n :setlocal number!<CR>
+nmap <Leader>l :set list!<CR>
+nmap <Leader>p :set paste!<CR>
+nmap <Leader>t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap <Leader>T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap <Leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap <Leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap <Leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
+nmap <Leader>s :SyntasticToggleMode<CR>
 
 "" Abbreviations
+
 " common command mistakes
 cabbrev W w
 cabbrev Q q
@@ -136,4 +138,5 @@ if has("autocmd")
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us
   autocmd BufNewFile,BufRead *.ejs set filetype=html
+  autocmd filetype crontab setlocal nobackup nowritebackup
 endif
