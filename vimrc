@@ -12,19 +12,20 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'tpope/vim-commentary'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
 Plugin 'w0rp/ale'
 
 " NERDTree
 Plugin 'scrooloose/nerdtree'
-map <Leader>t :NERDTreeToggle<CR>
+nmap ,t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 " Tagbar
 Plugin 'majutsushi/tagbar'
-nnoremap <Leader>r :TagbarToggle<CR>
+nnoremap ,r :TagbarToggle<CR>
 
 " Powerline
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -44,14 +45,17 @@ let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
 let g:UltiSnipsEditSplit="horizontal"
 
-" fzf
+" FZF
 Plugin 'junegunn/fzf.vim'
 set rtp+=/usr/local/opt/fzf
 nmap ,b :Buffers<CR>
-nmap ,t :Files<CR>
-nmap ,r :Tags<CR>
+nmap ,f :Files<CR>
+nmap ,s :Tags<CR>
 nmap ,m :Marks<CR>
-nmap ,f :Ag<CR>
+nmap ,g :Ag<CR>
+
+" ALE
+nmap <Leader>s :ALEToggle<CR>
 
 call vundle#end()
 
@@ -128,7 +132,6 @@ nmap <Leader>T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap <Leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap <Leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap <Leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
-nmap <Leader>s :ALEToggle<CR>
 
 "" Abbreviations
 
