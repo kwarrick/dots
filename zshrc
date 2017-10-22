@@ -7,7 +7,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-
 # PROMPT
 ################################################################################
 autoload -U promptinit
@@ -20,9 +19,7 @@ select-word-style bash
 
 prompt adam1
 
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
-
+bindkey -e
 
 # COMPLETION
 ################################################################################
