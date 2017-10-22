@@ -150,20 +150,25 @@ if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
   source /usr/local/opt/fzf/shell/completion.zsh
 fi
 
-if [ -e ~/.fzf ]; then
-  _append_to_path ~/.fzf/bin
-  source ~/.fzf/shell/key-bindings.zsh
-  source ~/.fzf/shell/completion.zsh
-fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # RBENV
-[ -d ~/.rbenv ] && eval "$(rbenv init -)"
+if [ -d ~/.rbenv/bin ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+fi
+eval "$(rbenv init -)"
 
 # PYENV
-[ -d ~/.pyenv ] && eval "$(pyenv init -)"
+if [ -d ~/.pyenv/bin ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+eval "$(pyenv init -)"
 
 # AUTOJUMP
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[ -e /usr/local/bin/brew ] \
+  && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] \
+  && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # OPAM configuration.
 # . /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
