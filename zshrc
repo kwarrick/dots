@@ -157,10 +157,10 @@ if [ -e ~/.fzf ]; then
 fi
 
 # RBENV
-eval "$(rbenv init -)"
+[ -d ~/.rbenv ] && eval "$(rbenv init -)"
 
 # PYENV
-eval "$(pyenv init -)"
+[ -d ~/.pyenv ] && eval "$(pyenv init -)"
 
 # AUTOJUMP
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
