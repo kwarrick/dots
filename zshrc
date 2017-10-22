@@ -88,12 +88,14 @@ else
 fi
 
 alias v="vim"
-alias g="git"
 alias f="noglob find -name"
 alias scp="noglob scp"
 alias ll="ls -lah"
 alias gdb="gdb -q"
 alias myip="dig +short @resolver1.opendns.com myip.opendns.com"
+
+alias g="git"
+alias gti="git"
 
 # Docker
 alias denv="docker-env"
@@ -102,6 +104,7 @@ alias d="docker"
 alias dps="docker ps -a"
 alias dm="docker-machine"
 
+alias ag="ag $* --pager 'less -R'"
 
 # FUNCTIONS
 ################################################################################
@@ -133,12 +136,25 @@ function docker-env () {
   eval "$(docker-machine env $*)"
 }
 
+function de() {
+  docker exec -it $(docker ps --last 1 -q) /bin/bash
+}
+
 
 # UTILS
 ################################################################################
 
-# OPAM configuration.
-# . /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# FZF
+if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+  source /usr/local/opt/fzf/shell/key-bindings.zsh
+  source /usr/local/opt/fzf/shell/completion.zsh
+fi
+
+if [ -e ~/.fzf ]; then
+  _append_to_path ~/.fzf/bin
+  source ~/.fzf/shell/key-bindings.zsh
+  source ~/.fzf/shell/completion.zsh
+fi
 
 # RBENV
 eval "$(rbenv init -)"
@@ -149,6 +165,6 @@ eval "$(pyenv init -)"
 # AUTOJUMP
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# GO
-export GOPATH=$HOME/Code/go
+# OPAM configuration.
+# . /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
