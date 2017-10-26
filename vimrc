@@ -133,6 +133,10 @@ nmap <Leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap <Leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap <Leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
 
+" autoformats
+vmap g=x !tidy -q -i -xml --show-errors 0<CR>`[v`]==<CR>
+vmap g=j !python -m json.tool<CR>
+
 "" Abbreviations
 
 " common command mistakes
@@ -145,7 +149,5 @@ if has("autocmd")
   filetype on
   autocmd FileType html setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us
-  autocmd FileType txt setlocal wrap linebreak spell spelllang=en_us
-  autocmd BufNewFile,BufRead *.ejs set filetype=html
   autocmd filetype crontab setlocal nobackup nowritebackup
 endif
