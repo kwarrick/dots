@@ -48,11 +48,11 @@ let g:UltiSnipsEditSplit="horizontal"
 " FZF
 Plugin 'junegunn/fzf.vim'
 set rtp+=/usr/local/opt/fzf
-nmap ,b :Buffers<CR>
-nmap ,f :Files<CR>
-nmap ,s :Tags<CR>
-nmap ,m :Marks<CR>
-nmap ,g :Ag<CR>
+nmap <Space>b :Buffers<CR>
+nmap <Space>t :Files<CR>
+nmap <Space>r :Tags<CR>
+nmap <Space>f :Marks<CR>
+nmap <Space>g :Ag<CR>
 
 " ALE
 nmap <Leader>s :ALEToggle<CR>
