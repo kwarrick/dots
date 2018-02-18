@@ -150,4 +150,5 @@ if has("autocmd")
   autocmd FileType html setlocal wrap linebreak spell spelllang=en_us
   autocmd FileType markdown setlocal wrap linebreak spell spelllang=en_us
   autocmd filetype crontab setlocal nobackup nowritebackup
+  autocmd FileType sql setlocal commentstring=--\ %s
 endif
