@@ -2,6 +2,7 @@ set nocompatible
 set encoding=utf-8
 set history=100
 set wildmenu
+set hidden
 filetype off
 
 " Plugins
@@ -15,10 +16,14 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
 Plugin 'w0rp/ale'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " NERDTree
 Plugin 'scrooloose/nerdtree'
+Plugin 'ryanoasis/vim-devicons'
 nmap ,t :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -74,7 +79,7 @@ end
 set number                                " line numbers
 set showcmd                               " display incomplete commands
 set listchars=tab:▸\ ,eol:¬               " set newline and tab chars
-set cursorline                            " highlight current line
+"set cursorline                            " highlight current line
 set colorcolumn=81                        " highlight column 80
 highlight ColorColumn ctermbg=235
 let &colorcolumn=join(range(81,999),",")
@@ -91,6 +96,7 @@ set backspace=indent,eol,start            " backspace everything in insert mode
 
 " no pipe character for split divider
 set fillchars+=vert:\ 
+highlight VertSplit cterm=NONE ctermbg=DarkGray
 
 "" Searching
 set hlsearch                    " highlight matches
@@ -134,7 +140,7 @@ nmap <Leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap <Leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
 
 " autoformats
-vmap g=x !tidy -q -i -xml --show-errors 0<CR>`[v`]==<CR>
+vmap g=x !tidy -q -i -xml<CR>`[v`]==<CR>
 vmap g=j !python -m json.tool<CR>
 
 "" Abbreviations
@@ -152,3 +158,25 @@ if has("autocmd")
   autocmd filetype crontab setlocal nobackup nowritebackup
   autocmd FileType sql setlocal commentstring=--\ %s
 endif
+
+" Rust
+let g:racer_cmd = $HOME."/.cargo/bin/racer"
+let g:rustc_path = $HOME."/.cargo/bin/rustc"
+let g:rustfmt_autosave = 1
+let g:tagbar_type_rust = {
+  \ 'ctagstype' : 'rust',
+  \ 'kinds' : [
+      \'T:types,type definitions',
+      \'f:functions,function definitions',
+      \'g:enum,enumeration names',
+      \'s:structure names',
+      \'m:modules,module names',
+      \'c:consts,static constants',
+      \'t:traits',
+      \'i:impls,trait implementations',
+  \]
+  \}
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
