@@ -17,7 +17,6 @@ promptinit
 colors
 select-word-style bash
 
-# ⬣ ⏣
 prompt adam1
 
 bindkey -e
@@ -166,14 +165,6 @@ if [ -d ~/.pyenv/bin ]; then
 fi
 eval "$(pyenv init -)"
 
-# AUTOJUMP
-# [ -e /usr/local/bin/brew ] \
-#   && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] \
-#   && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-# OPAM configuration.
-# . /Users/warrick/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
 # NVM
 function nvm_init() {
   export NVM_DIR="$HOME/.nvm"
@@ -181,6 +172,6 @@ function nvm_init() {
   # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
-# tabtab source for electron-forge package
-# uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[[ -f /Users/warrick/xi-electron/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/warrick/xi-electron/node_modules/tabtab/.completions/electron-forge.zsh
+# GO
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
