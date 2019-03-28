@@ -3,6 +3,11 @@ set encoding=utf-8
 set history=100
 set wildmenu
 set hidden
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
+set laststatus=2
+
 filetype off
 
 " Plugins
@@ -12,14 +17,23 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ervandew/supertab'
-Plugin 'flazz/vim-colorschemes'
+Plugin 'chriskempson/base16-vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
-Plugin 'w0rp/ale'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'christoomey/vim-tmux-navigator'
+
+" Airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" Base16 color scheme
+let base16colorspace = 256
+set termguicolors
 
 " NERDTree
 Plugin 'scrooloose/nerdtree'
@@ -31,16 +45,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " Tagbar
 Plugin 'majutsushi/tagbar'
 nnoremap ,r :TagbarToggle<CR>
-
-" Powerline
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
-let g:Powerline_symbols = 'fancy'
-set encoding=utf-8
-set t_Co=256
-set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
-set termencoding=utf-8
-set laststatus=2
 
 " Ultisnips
 Plugin 'SirVer/ultisnips'
@@ -60,7 +64,15 @@ nmap <Space>f :Marks<CR>
 nmap <Space>g :Ag<CR>
 
 " ALE
+Plugin 'w0rp/ale'
 nmap <Leader>s :ALEToggle<CR>
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'vue': ['prettier', 'eslint'],
+\   'css': ['prettier'],
+\   'html': ['prettier'],
+\}
+let g:ale_fix_on_save = 1
 
 call vundle#end()
 
@@ -69,6 +81,7 @@ syntax enable                             " syntax highlighting
 filetype on
 filetype indent on                        " load file type specific indentation
 filetype plugin on                        " load file type specific plugins
+colorscheme base16-default-dark
 
 set noswapfile
 
@@ -95,7 +108,7 @@ set backspace=indent,eol,start            " backspace everything in insert mode
 " match ExtraWhitespace /\s\+\%#\@<!$/
 
 " no pipe character for split divider
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 highlight VertSplit cterm=NONE ctermbg=DarkGray
 
 "" Searching
@@ -163,20 +176,18 @@ endif
 let g:racer_cmd = $HOME."/.cargo/bin/racer"
 let g:rustc_path = $HOME."/.cargo/bin/rustc"
 let g:rustfmt_autosave = 1
-let g:tagbar_type_rust = {
-  \ 'ctagstype' : 'rust',
-  \ 'kinds' : [
-      \'T:types,type definitions',
-      \'f:functions,function definitions',
-      \'g:enum,enumeration names',
-      \'s:structure names',
-      \'m:modules,module names',
-      \'c:consts,static constants',
-      \'t:traits',
-      \'i:impls,trait implementations',
-  \]
-  \}
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+autocmd FileType rust nmap gd <Plug>(rust-def)
+autocmd FileType rust nmap gs <Plug>(rust-def-split)
+autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
+autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+" Ale highlight colors
+highlight ALEError ctermbg=131
+highlight ALEWarning ctermbg=90
+
+" tmux-navigator bindings
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr> nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
