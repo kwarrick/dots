@@ -105,6 +105,8 @@ alias dps="docker ps -a"
 alias dm="docker-machine"
 
 alias ag="ag $* --pager 'less -R'"
+alias cb="cargo build"
+alias cr="cargo run"
 
 # FUNCTIONS
 ################################################################################
